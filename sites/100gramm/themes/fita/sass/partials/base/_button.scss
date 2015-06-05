@@ -1,0 +1,45 @@
+.btn {
+  background-color: #F5F5F5;
+  background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+  background-repeat: repeat-x;
+  border-color: rgba($ultra, 0.1) rgba($ultra, 0.1) #B3B3B3;
+  border-image: none;
+  border-radius: $br;
+  border-style: solid;
+  border-width: $thin;
+  box-shadow: 0 $thin 0 rgba($white, 0.2) inset, 0 $thin $thick rgba($ultra, 0.05);
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  line-height: $lh-btn;
+  @include bx-sz();
+  padding: rem_round(1/3) 1em;
+  text-align: center;
+  text-shadow: 0 $thin $thin rgba($white, 0.75);
+  vertical-align: middle;
+  &:hover, &:focus {
+    background-position: 0 rem_round(-1.3);
+    color: #333333;
+    text-decoration: none;
+    transition: background-position .3s linear 0s;
+    background-color: #E6E6E6;
+  }
+  &:active{
+    background-image: none;
+    box-shadow: 0 rem_round(.2) rem_round(.4) rgba($ultra, 0.15) inset, 0 $thin rem_round(.2) rgba($ultra, 0.05);
+    outline: 0 none;
+  }
+}
+
+@mixin plain-button {
+  background: $ui-main;
+  border-radius: 0;
+  border: none;
+  padding: rem_round(.2) rem_round(.5);
+  transition-duration: .2s;
+  transition-property: all;
+  box-shadow: none;
+  &:active {
+    transform: translate($thin, $thin);
+  }
+}

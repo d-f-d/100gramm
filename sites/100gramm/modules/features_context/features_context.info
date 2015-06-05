@@ -1,0 +1,15 @@
+name = Features Context
+core = 7.x
+package = Features
+php = 5.2.4
+version = 7.x-1.0
+project = features_context
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = menu
+features[context][] = main
+features[ctools][] = context:context:3
+features[features_api][] = api:2
+features[menu_custom][] = menu-top-menu
+project path = sites/100gramm/modules

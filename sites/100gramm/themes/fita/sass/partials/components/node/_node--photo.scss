@@ -1,0 +1,113 @@
+.node--photo--full {
+  .group-left, .group-right {
+    float: none;
+    width: auto;
+  }
+  @include breakpoint(desk) {
+    @include g-row($space);
+    .group-left {
+      @include g-columns(7, $space);
+    }
+    .group-right {
+      @include g-columns(5, $space);
+    }
+    .group-footer {
+      @include g-columns(12, $space);
+    }
+  }
+  .field--name-field-photo {
+    margin-bottom: .6em;
+    img {
+      border: rem(4) solid $white;
+      box-shadow: $thin $thin rem(5) rgba(#000, .2);
+      display: block;
+      margin: auto;
+    }
+  }
+
+  .field--name-photografer {
+    margin-bottom: .6em;
+    text-align: center;
+    @include breakpoint(desk) {
+      @include to-right;
+    }
+    @include breakpoint(mini) {
+      @include to-left;
+    }
+    @include breakpoint(micro) {
+      @include clear;
+    }
+    img {
+      max-width: rem(100);
+    }
+  }
+  .field--name-like-it {
+    @include breakpoint(desk) {
+      text-align: right;
+    }
+    @include breakpoint(mini) {
+      text-align: center;
+    }
+    .field__item > span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    margin-bottom: .6em;
+  }
+  .field--name-description {
+    margin: .6em 0;
+    background: #47494b;
+    text-shadow: 0 .1em 0 rgba(#000, .35);
+    color: $white;
+    padding: 1em;
+    @include breakpoint(desk) {
+      clear: right;
+    }
+    @include breakpoint(mini) {
+      clear: left;
+    }
+    border: .1em solid #353535;
+    box-shadow: $thin $thin 0 rgba($white, .30) inset;
+    border-radius: .33em;
+    position: relative;
+    //    &::before {
+    //      content: '';
+    //      position: absolute;
+    //      top: 50%;
+    //      right: 100%;
+    //      margin-top: em(-9px);
+    //      border: em(9px) solid;
+    //      border-color: transparent #47494b transparent transparent;
+    //    }
+  }
+  .field--name-share-it {
+    @include clear;
+    @include breakpoint(mini) {
+      text-align: center;
+    }
+  }
+  .field--name-photo--tags {
+    @include breakpoint(micro) {
+      text-align: center;
+    }
+    .tag {
+      padding: 0 .5em;
+      margin: .3em 0;
+      display: inline-block;
+      background: #fa8d1e;
+      border-radius: .2em;
+      box-shadow: $thin $thin 0 rgba($ultra, .2) inset;
+      text-shadow: $thin $thin 0 rgba($ultra, .2);
+      color: $white;
+      &:hover {
+        background: #ffa64e;
+      }
+    }
+  }
+  .field--name-photo--created-time { color: #666;
+    @include breakpoint(micro) {
+      text-align: center;
+    }
+  }
+}
+

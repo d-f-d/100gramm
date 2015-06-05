@@ -1,0 +1,7 @@
+name = jquery.timers
+version = 1.2
+download url = https://github.com/patryk/jquery.timers
+files[js][] = jquery.timers.min.js
+variants[uncompress][files][js][] = jquery.timers.js
+
+

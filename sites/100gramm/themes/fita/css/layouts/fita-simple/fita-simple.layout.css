@@ -1,0 +1,92 @@
+/*******************************************************************************
+ * _layout.scss
+ *
+ * The layout of the major regions (usually, but not necessarily Drupal regions)
+ * that components will be placed within. Layout styles for the theme's
+ * components should not be placed here and should instead be kept with the
+ * relevant SCSS for that component.
+ ******************************************************************************/
+html, body {
+  height: 100%;
+}
+
+.l-page {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.l-header {
+  position: relative;
+}
+
+.l-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80em;
+  width: 100%;
+  height: 8em;
+  box-sizing: border-box;
+  padding: 1.5rem;
+}
+
+.l-main {
+  position: relative;
+  max-width: 80em;
+  margin: 3rem auto 8em;
+  padding: 0 0 1.5rem 0;
+}
+@media (max-width: 480px) {
+  .l-main {
+    margin-top: 0;
+  }
+}
+.l-main:after, .l-main:before {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  overflow: hidden;
+}
+
+.l-content, .l-region--sidebar-first, .l-region--sidebar-second {
+  box-sizing: border-box;
+}
+
+.l-content {
+  float: left;
+  width: 100%;
+  border: 0 solid transparent;
+  padding: 0 1.5rem;
+}
+.has-two-sidebars .l-content, .has-sidebar-first .l-content {
+  border-left-width: 15em;
+}
+.has-two-sidebars .l-content, .has-sidebar-second .l-content {
+  border-right-width: 15em;
+}
+
+.l-region--sidebar-first, .l-region--sidebar-second {
+  float: left;
+  z-index: 2;
+  position: relative;
+}
+.l-region--sidebar-first .block, .l-region--sidebar-second .block {
+  margin-bottom: 1.5rem;
+}
+
+.l-region--sidebar-first {
+  width: 15em;
+  padding-left: 1.5rem;
+  margin-left: -100%;
+}
+
+.l-region--sidebar-second {
+  width: 15em;
+  padding-right: 1.5rem;
+  margin-left: -15em;
+}

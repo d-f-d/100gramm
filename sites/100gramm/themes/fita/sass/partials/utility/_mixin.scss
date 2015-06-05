@@ -1,0 +1,233 @@
+@import "toolkit";
+@import "breakpoints";
+@import "compass";
+@import "compass/layout/stretching";
+
+$_dynamic-extend__mode: enabled !default;
+$_dynamic-extend__selectors: ();
+@mixin _($name: NULL) {
+  @if $_dynamic-extend__mode == enabled {
+    @if $name == NULL {
+      $name: &;
+    }
+    $name: #{$current-breakpoint}__#{$name};
+    $selector: map_get($_dynamic-extend__selectors, $name);
+    @if $selector == null {
+      $selector: unique_id();
+      @at-root %#{$selector} {
+        @content;
+      }
+      $_dy: map-merge($_dynamic-extend__selectors, ($name:$selector)) !global;
+    }
+    @at-root & {
+      @extend %#{$selector};
+    }
+    //    @include dynamic-extend(#{$current-breakpoint}__#{$name}) { @content; }
+  } @else { @content; }
+}
+
+@mixin l-g-h($startColor: $ui-main, $endColor: $ui-second) {
+  //  background-color: average($startColor, $endColor);
+  //  .l-g("90deg, ${startColor} 0%, ${endColor} 100%");
+  background: -webkit-gradient(linear, left top, right top, from($startColor), to($endColor));
+  background: linear-gradient(90deg, $startColor 0%, $startColor 100);
+}
+
+@mixin l-g-v($startColor: $ui-main, $endColor: $ui-second) {
+  //  background-color: average($startColor, $endColor);
+  //  .l-g("180deg, ${startColor} 0%, ${endColor} 100%");
+  background: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+  background: linear-gradient(180deg, $startColor 0%, $endColor 100%);
+}
+
+@mixin bx-sz($s: border-box) {
+  //  @include _("bx-sz--#{$s}") {
+  //    @include box-sizing($s);
+  //  }
+  box-sizing: $s;
+}
+
+//helper mixin
+@mixin resetList {
+  @include _(resetList) {
+    li {
+      list-style: none;
+    }
+    li, ul, ol {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+@mixin resetTable {
+  @include _(resetTable) {
+    table, tbody, thead, tbody, tr, td, th {
+      border: none;
+      background: none;
+    }
+  }
+}
+
+@mixin resetTypografy {
+  @include _(resetTypografy) {
+    * {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// For image replacement
+@mixin ir {
+  @include _(ir) {
+    overflow: hidden;
+    &::before {
+      display: block;
+      content: '';
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+@mixin linkUnderlineInvert {
+  @include _(linkUnderlineInvert) {
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  }
+}
+
+@mixin list2table {
+  @include _(list2table) {
+    border-collapse: collapse;
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    & > li {
+      display: table-cell;
+      padding: 0;
+    }
+  }
+}
+
+@mixin ext-background__layout {
+  @include _(ext-background__layout) {
+    z-index: 0;
+    &:before {
+      z-index: -1;
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      height: 100% !important;
+      left: -999em;
+      right: -999em;
+      visibility: visible !important;
+    }
+  }
+}
+
+@mixin ext-background($background: 0, $position: relative) {
+  @include ext-background__layout;
+  position: $position;
+  &:before {
+    @if $background {
+      background: $background;
+    }
+  }
+}
+
+@mixin to-left($space: $ex) {
+  float: left;
+  margin-right: $space;
+}
+
+@mixin to-right($space: $ex) {
+  float: right;
+  margin-left: $space;
+}
+
+@mixin translate-y($space: rem(4)) {
+  @include _(translate-y--#{$space}) {
+    @include transform(translateY($space));
+  }
+}
+
+//  Drupal helper clone mixin
+
+@mixin element-invisible {
+  @include _(element-invisible) {
+    clip: rect(0, 0, 0, 0);
+    position: absolute !important;
+  }
+}
+
+@mixin clearfix {
+  @include _(clearfix) {
+    &:after, &:before {
+      content: "";
+      display: block;
+      height: 0;
+      clear: both;
+      overflow: hidden;
+    }
+  }
+}
+
+@mixin clear {
+  clear: both;
+  float: none;
+}
+
+@mixin blur {
+  @include _(blur) {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'>    <filter id=\'blur\'><feGaussianBlur stdDeviation=\'5\'/>    <feComponentTransfer>        <feFuncR slope=\"0.5\" type=\"linear\"></feFuncR>        <feFuncG slope=\"0.5\" type=\"linear\"></feFuncG>        <feFuncB slope=\"0.5\" type=\"linear\"></feFuncB>    </feComponentTransfer>  </filter></svg>#blur");
+    @include filter(brightness(.7) blur(5px));
+  }
+}
+
+$_settings: ();
+
+@function settings($k, $v) {
+  $value: map_get($_settings, $k);
+  @if ($value == null) {
+    $value: append((), $v);
+  } @else {
+    $value: append($value, $v);
+  }
+  $_settings: map-merge($_settings, ($k:$value)) !global;
+  @return '';
+}
+
+@mixin settings($k, $v) {
+  $o: settings($k, $v);
+}
+
+//@include settings(breakpoints, $breakpoints);
+
+@mixin on_exit() {
+  /*! #{SassyExport("/json/hello.js", $_settings, true, true)} */
+}
+
+@mixin stretch($offset-top: 0, $offset-right: 0, $offset-bottom: 0, $offset-left: 0) {
+  @include _(stretch--#{$offset-top}--#{$offset-right}--#{$offset-bottom}--#{$offset-left}) {
+    position: absolute;
+    @if $offset-top { top: $offset-top; }
+    @if $offset-bottom { bottom: $offset-bottom; }
+    @if $offset-left { left: $offset-left; }
+    @if $offset-right { right: $offset-right; }
+  }
+}
+
+@mixin fitImage() {
+  @include _(fitImage) {
+    @include stretch();
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
+}

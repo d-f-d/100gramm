@@ -1,0 +1,9 @@
+.kickass_placeholder {
+  background: rgba(0, 0, 0, .2);
+  padding: .5em 1em;
+  cursor: pointer;
+}
+
+.kickass_placeholder::before {
+  content: 'Click Me';
+}

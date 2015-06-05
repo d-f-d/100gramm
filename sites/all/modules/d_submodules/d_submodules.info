@@ -1,0 +1,6 @@
+name = "D Submodules"
+description = "Submodules functionality"
+package = "D"
+core = 7.x
+
+version = "7.x-2.7"

@@ -1,0 +1,111 @@
+@charset "UTF-8";
+/**
+ * @file
+ * Theme for for system messages.
+ */
+/* Message */
+/* Grays*/
+/* Colors*/
+/* Links*/
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.messages {
+  position: relative;
+  border: 1px solid;
+  margin: .6em 0;
+  padding: 1em 1em 1em 3em;
+  /* LTR */
+  border-radius: 0.35714rem;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+}
+.messages ul {
+  margin: 0 0 0 1em;
+  /* LTR */
+  padding: 0;
+}
+.messages ul li {
+  list-style-image: none;
+}
+.messages .close-message {
+  font-weight: normal;
+  right: 1em;
+  top: 0.8em;
+}
+
+.messages--status {
+  border-color: #accc5d;
+}
+
+.messages--status, tr.ok {
+  background: -webkit-gradient(linear, left top, left bottom, from(#cfe88d), to(#c1da7f));
+  background: linear-gradient(180deg, #cfe88d 0%, #c1da7f 100%);
+  color: #70892b;
+}
+
+.messages--warning, .messages.warning {
+  border-color: #68bfc9;
+}
+
+.messages--warning, tr.warning, .messages.warning {
+  background: -webkit-gradient(linear, left top, left bottom, from(#99e2eb), to(#83d6de));
+  background: linear-gradient(180deg, #99e2eb 0%, #83d6de 100%);
+  color: #3b8d99;
+}
+
+.messages--error, .messages.error {
+  border-color: #dc4e4d;
+}
+
+.messages--error, .messages.error, tr.error {
+  background: -webkit-gradient(linear, left top, left bottom, from(#f48888), to(#e27676));
+  background: linear-gradient(180deg, #f48888 0%, #e27676 100%);
+  color: #b62424;
+}
+
+.messages:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 135%;
+  line-height: 2.6;
+  width: 2em;
+  text-align: center;
+}
+.messages:before {
+  font-family: "WebHostingHub-Glyphs";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-feature-settings: "liga","dlig";
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -moz-font-feature-settings: "liga","dlig";
+  -ms-font-feature-settings: "liga","dlig";
+  -o-font-feature-settings: "liga","dlig";
+  font-feature-settings: "liga","dlig";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-decoration: none !important;
+}
+
+.messages--error:before, .messages.error:before {
+  content: "×";
+}
+
+.messages--warning:before, .messages.warning:before {
+  content: "";
+}
+
+.messages--status:before {
+  content: "✓";
+}

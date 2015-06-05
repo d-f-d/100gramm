@@ -1,0 +1,86 @@
+@charset "utf-8";
+/*******************************************************************************
+ * _layout.scss
+ *
+ * The layout of the major regions (usually, but not necessarily Drupal regions)
+ * that components will be placed within. Layout styles for the theme's
+ * components should not be placed here and should instead be kept with the
+ * relevant SCSS for that component.
+ ******************************************************************************/
+@import "../../partials/utility/sizes";
+@import "../../partials/utility/mixin";
+@import "../../partials/utility/breakpoints";
+
+
+$mainWidth:                     80em;
+$sidebarLeftWidth:              15em;
+$sidebarRightWidth:             15em;
+$footerHeight:                  8em;
+//$headerHeight:                  10em;
+
+
+html, body {
+  height: 100%;
+}
+
+.l-page {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+//  min-width: $mainWidth;
+}
+
+.l-header {
+  //  height: $headerHeight;
+  position: relative;
+}
+
+.l-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $mainWidth;
+  width: 100%;
+  height: $footerHeight;
+  @include bx-sz;
+  padding: $space;
+}
+
+.l-main {
+  position: relative;
+  max-width: $mainWidth;
+  margin: 2*$space auto $footerHeight;
+  padding: 0 0 $space 0;
+  @include breakpoint(mini) {
+    margin-top: 0;
+  }
+  @include clearfix;
+}
+
+.l-content, .l-region--sidebar-first, .l-region--sidebar-second{
+  @include bx-sz;
+}
+
+.l-content {
+  float: left;
+  width: 100%;
+  border: 0 solid transparent;
+  padding: 0 $space;
+  .has-two-sidebars &, .has-sidebar-first  & {border-left-width:  $sidebarLeftWidth;}
+  .has-two-sidebars &, .has-sidebar-second & {border-right-width: $sidebarRightWidth;}
+}
+
+.l-region--sidebar-first, .l-region--sidebar-second {
+  float: left;
+  z-index: 2;
+  position: relative;
+  .block {
+    margin-bottom: $space;
+  }
+}
+
+.l-region--sidebar-first  {width: $sidebarLeftWidth;  padding-left : $space; margin-left: -100%; }
+.l-region--sidebar-second {width: $sidebarRightWidth; padding-right: $space; margin-left: -$sidebarRightWidth;}

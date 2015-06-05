@@ -1,0 +1,42 @@
+$default-breakpoint: root !default;
+$current-breakpoint: $default-breakpoint;
+
+$breakpoints: (
+        small :  960,
+        mini  :  480,
+        wide  : 1230
+) !default;
+
+
+@mixin breakpoint($first-point: null, $second-point: null) {
+  @if $second-point == null {
+    $second-point: $first-point;
+    $first-point: null;
+  } @elseif $second-point == false {
+    $second-point: null;
+  }
+
+  $points: ();
+  @if $first-point {
+    $w: map-get($breakpoints, $first-point);
+    @if ($w == null) { $w: $first-point }
+    $points: append($points, (unquote('min-width: #{$w + 1px}')));
+  }
+  @if $second-point {
+    $w: map-get($breakpoints, $second-point);
+    @if ($w == null) { $w: $second-point }
+    $points: append($points, (unquote('max-width: #{$w + 0px}')));
+  }
+  $point: unquote('('+nth($points, 1)+')');
+  @if (length($points)>1) {
+    $point: $point + unquote(' AND ('+nth($points, 2)+')');
+  }
+  $current-breakpoint: $point !global;
+  @if (length($points)==1) {
+    @media(nth($points, 1)) { @content }
+  }
+  @if (length($points)==2) {
+    @media(nth($points, 1)) AND (nth($points, 2)) { @content }
+  }
+  $current-breakpoint: $default-breakpoint !global;
+}

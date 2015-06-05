@@ -1,0 +1,21 @@
+$rem:                           14px !default;
+$rem--small:                    12px !default;
+
+@function rem($target, $context: $rem) {
+  @if $target == 0 { @return 0 }
+  @return ($target + 0px) / ($context + 0px) + 0rem;
+}
+
+@function rem_round($target, $context: $rem) {
+  @return rem(round($target*$context), $context);
+}
+
+$ex:                            rem_round(.6)  !default;
+$thin:                          1px  !default;
+$thick:                         2px  !default;
+$lh:                            1.5      !default;
+$lh-btn:                        1.15     !default; // magic number
+
+$space:                         rem_round($lh) !default;
+
+$br:                            rem_round(1/3) !default;

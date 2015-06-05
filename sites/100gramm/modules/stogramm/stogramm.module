@@ -1,0 +1,198 @@
+<?php
+define('STOGRAMM_ID', '364693583cbf4025b9e77c8c7fe5f1ea');
+define('STOGRAMM_SECRET', 'f614fba9e84f4ceca6956ea353b1d42d');
+
+function stogramm_menu() {
+  $items = [];
+  $items['admin/stogramm'] = [
+    'page callback' => 'stogramm_image_list',
+    'title' => 'Список картинок',
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+  $items['widget.js'] = [
+    'page callback' => 'stogramm_widget',
+    'title' => 'Список картинок',
+    'access arguments' => ['access content'],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  return $items;
+}
+
+function stogramm_widget() {
+  $nids = db_select('node', 'n')->fields('n', ['nid'])->orderBy('created', 'DESC')->range(0, 3)->execute();
+  $output = [];
+  foreach ($nids as $node) {
+    $node = entity_metadata_wrapper('node', $node->nid);
+    $photo = $node->field_photo->value();
+    $output[] = '<a href="' . url('node/' . $node->nid->value(), ['absolute' => TRUE]) . '" target=_blank>' . theme_image_style(
+        [
+          'style_name' => 'widget',
+          'path' => $photo['uri'],
+          'width' => $photo['width'],
+          'height' => $photo['height']
+        ]
+      ) . '</a>';
+//    dsm($node->title);
+  }
+  $output = implode('<br />', $output);
+  $output = "document.write('{$output}');";
+
+  drupal_add_http_header('Content-Type', 'text/html; charset=utf-8');
+  echo $output;
+  if ($cache = drupal_page_set_cache()) {
+    drupal_serve_page_from_cache($cache);
+  }
+  else {
+    ob_flush();
+  }
+  drupal_exit();
+}
+
+function stogramm_image_list() {
+  $output = [];
+  if (isset($_GET['code'])) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.instagram.com/oauth/access_token');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_POSTFIELDS,
+      [
+        'client_id' => STOGRAMM_ID,
+        'client_secret' => STOGRAMM_SECRET,
+        'grant_type' => 'authorization_code',
+        'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
+        'code' => $_GET['code'],
+      ]
+    );
+    $resp = drupal_json_decode(curl_exec($ch));
+    variable_set('stogramm_access_token', $resp['access_token']);
+    drupal_goto(current_path());
+  }
+  $output['login'] = [
+    '#markup' => '<p>' . l('login', 'https://api.instagram.com/oauth/authorize/', [
+      'query' => [
+        'client_id' => STOGRAMM_ID,
+        'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
+        'response_type' => 'code',
+      ]
+      ]) . '</p>'
+  ];
+  $access_token = variable_get('stogramm_access_token', NULL);
+  $ch = curl_init();
+  $tag = arg(2) ? arg(2) : 'govoritdonetsk';
+  curl_setopt($ch, CURLOPT_URL, "https://api.instagram.com/v1/tags/$tag/media/recent?access_token=$access_token"
+    . (isset($_GET['max_tag_id']) ? ('&max_tag_id=' . $_GET['max_tag_id']) : '')
+    . (isset($_GET['min_tag_id']) ? ('&min_tag_id=' . $_GET['min_tag_id']) : '')
+  );
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  $resp = drupal_json_decode(curl_exec($ch));
+//  dsm($resp);
+//  dsm(REQUEST_TIME);
+  if (isset($resp['pagination']['next_min_id'])) {
+    $output['pager-prev'] = [
+      '#markup' => '<p>' . l('prev', current_path(), [
+        'query' => ['min_tag_id' => $resp['pagination']['next_min_id'],]
+        ]) . '</p>'
+    ];
+  }
+  if (isset($resp['pagination']['next_max_id'])) {
+    $output['pager-next'] = [
+      '#markup' => '<p>' . l('next', current_path(), [
+        'query' => ['max_tag_id' => $resp['pagination']['next_max_id'],]
+        ]) . '</p>'
+    ];
+  }
+  if (!empty($resp['data'])) {
+    foreach ($resp['data'] as $image) {
+      $row = [];
+      $row['img'] = [
+        '#theme' => 'image',
+        '#path' => $image['images']['thumbnail']['url'],
+        '#width' => $image['images']['thumbnail']['width'],
+        '#height' => $image['images']['thumbnail']['height'],
+      ];
+      $row['form'] = drupal_get_form('stogramm_image_save', $image);
+      $output['image'][] = $row;
+    }
+  }
+  return $output;
+}
+
+function stogramm_image_save($form, &$form_state, $image = NULL) {
+  if (isset($form_state['input']['image'])) {
+    $image = drupal_json_decode($form_state['input']['image']);
+  }
+  $form['#prefix'] = '<div id=' . __FUNCTION__ . $image['id'] . '>';
+  $form['#suffix'] = '</div>';
+
+  $form['image'] = [
+    '#type' => 'hidden',
+    '#value' => drupal_json_encode($image),
+  ];
+  $node = stogramm_get_node($image);
+  if (isset($node->nid)) {
+    $form['link'] = [
+      '#markup' => '<p>' . l($node->title, 'node/' . $node->nid) . '</p>',
+    ];
+  }
+  $form['save'] = [
+    '#type' => 'submit',
+    '#value' => 'Сохранить',
+    '#ajax' => [
+      'callback' => __FUNCTION__,
+      'wrapper' => __FUNCTION__ . $image['id'],
+    ],
+  ];
+  return $form;
+}
+
+function stogramm_image_save_submit($form, &$form_state) {
+  $image = drupal_json_decode($form_state['input']['image']);
+  $node = stogramm_get_node($image);
+  $node = entity_metadata_wrapper('node', $node);
+  $node->field_id = $image['id'];
+  $node->field_meta = drupal_json_encode($image);
+  if ($image['caption']) {
+    $node->title = (strlen($image['caption']['text']) < 128) ? $image['caption']['text'] : (mb_substr($image['caption']['text'], 0, 125) . '...');
+  }
+  else {
+    $node->title = $image['id'];
+  }
+  $src = $image['images']['standard_resolution']['url'];
+  $directory = 'public://photo/' . preg_replace('/.+:\/\//', '', drupal_dirname($src));
+  file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+  $uri = $directory . '/' . drupal_basename($src);
+  $file = entity_load('file', ['uri' => $uri]);
+  $file = $file ? array_shift($file) : file_save_data(file_get_contents($src), $uri);
+  $node->field_photo = (array)$file;
+  $node->save();
+}
+
+/**
+ * @param $image
+ * @return bool|mixed
+ */
+function stogramm_get_node($image) {
+  $query = new EntityFieldQuery;
+  $result = $query
+    ->entityCondition('entity_type', 'node')
+    ->fieldCondition('field_id', 'value', $image['id'], '=')
+    ->execute();
+  $node = isset($result['node']) ? node_load(array_keys($result['node'])[0]) : entity_create('node', ['type' => 'photo']);
+  node_object_prepare($node);
+  return $node;
+}
+
+function stogramm_node_load($nodes) {
+  foreach ($nodes as $node) {
+    if (isset($node->field_meta)) {
+      $node->meta = drupal_json_decode($node->field_meta['und'][0]['value']);
+    }
+  }
+}

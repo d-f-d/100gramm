@@ -1,0 +1,91 @@
+/**
+ * @file
+ * Theme for for system messages.
+ */
+/* Message */
+@import "partials/utility";
+
+.messages {
+  position: relative;
+  border: $thin solid;
+  margin: .6em 0;
+  padding: 1em 1em 1em 3em; /* LTR */
+  border-radius: $br;
+  ul {
+    margin: 0 0 0 1em; /* LTR */
+    padding: 0;
+  }
+  ul li {
+    list-style-image: none;
+  }
+  font-weight: bold;
+  text-shadow: 0 $thin 0 rgba($white, .3);
+  box-shadow: 0 $thin 0 rgba($white, .3) inset;
+  .close-message{
+    font-weight: normal;
+    right: 1em;
+    top: 0.8em;
+  }
+}
+
+.messages--status {
+  border-color: #accc5d;
+}
+
+.messages--status, tr.ok {
+  @include l-g-v(#cfe88d, #c1da7f);
+
+  color: #70892b;
+
+
+//  background-color: mix(#F4FCEA, #8CCE3B);
+}
+
+.messages--warning, .messages.warning {
+  border-color: #68bfc9;
+}
+
+.messages--warning, tr.warning, .messages.warning {
+
+  @include l-g-v(#99e2eb, #83d6de);
+  color: #3b8d99;
+}
+
+.messages--error, .messages.error {
+  border-color: #dc4e4d;
+}
+
+.messages--error, .messages.error, tr.error {
+  @include l-g-v(#f48888, #e27676);
+  color: #b62424;
+}
+
+.messages--error, .messages.error, tr.error {
+  $c1: rgba($white, .1);
+  $c2: transparent;
+//  background-image: linear-gradient(135deg, $c1, $c1 25%, $c2 25%, $c2 50%, $c1 50%, $c1 75%, $c2 75%, $c2);
+//  background-size: $space $space;
+}
+
+.messages:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 135%;
+  line-height: 2.6;
+  width: 2em;
+  text-align: center;
+  @include icon__font;
+}
+
+.messages--error, .messages.error {
+  &:before { content: $icon-remove; }
+}
+
+.messages--warning, .messages.warning {
+  &:before { content: $icon-info-sign; }
+}
+
+.messages--status {
+  &:before { content: $icon-ok; }
+}

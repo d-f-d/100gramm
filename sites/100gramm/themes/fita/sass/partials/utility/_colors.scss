@@ -1,0 +1,34 @@
+$color:                         #222 !default;
+$background-color:              #fff !default;
+$system:                        mix($color, $background-color, 25%) !default;
+
+/* Grays*/
+$white:                         #fff !default;
+$gray-lighter:                  #ddd !default;
+$gray-light:                    #777 !default;
+$gray:                          #555 !default;
+$gray-dark:                     #333 !default;
+$black:                         #222 !default;
+$ultra:                         #000 !default;
+
+/* Colors*/
+$blue:                          #3D98F1 !default;
+$green:                         #7FB060 !default;
+$red:                           #AE2B2B !default;
+$yellow:                        #F4DD51 !default;
+$orange:                        #FD633D !default;
+$pink:                          #C3325F !default;
+$purple:                        #632F53 !default;
+
+/* Links*/
+$link-color:                    #1C94C4 !default;
+$link-hover-color:              mix($link-color, $color, 70%) !default;
+
+
+$ui-main:                       #F6A828 !default;
+$ui-second:                     hsl(hue(adjust-hue($ui-main, 83)), 100%, 25%) !default;
+
+$ui-main-light:                 mix($ui-main, $white, 75%) !default;
+$ui-main-lightness:             mix($ui-main, $white, 50%) !default;
+$ui-main-dark:                  mix($ui-main, $black, 85%) !default;
+$ui-main-darkness:              mix($ui-main, $black, 70%) !default;

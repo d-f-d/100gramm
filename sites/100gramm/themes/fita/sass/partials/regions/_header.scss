@@ -1,0 +1,105 @@
+.l-header {
+  padding: $space/2 2*$space;
+  @include breakpoint(micro){
+    padding: $space/2;
+    height: auto;
+  }
+  @include bx-sz();
+  //  @include clearfix;
+  background-color: #232322;
+  background: linear-gradient(to bottom, rgba($white, .05), rgba(#000, .05)), image-url('l-header.png') #232322;
+  box-shadow: 0 $ex 0 #232323 inset, 0 (-$ex) 0 rgba($white, .15);
+  border-radius: $ex $ex 0 0;
+  margin: (-$ex) (-$thin) $space;
+  @include clearfix;
+}
+
+.l-branding, #header {
+  @include to-left;
+  width: 35%;
+  font: inherit;
+  a { text-decoration: none; }
+  .site-slogan {
+    @include element-invisible;
+  }
+  img { display: block;}
+  padding: $ex 0;
+  @include breakpoint(micro){
+    width: auto;
+    float: none;
+    margin: auto;
+    img{margin: auto}
+  }
+}
+.l-branding:empty {
+  display: none;
+}
+
+
+#block-menu-menu-top-menu, .site-top-menu  {
+  position: absolute;
+  right: $space;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: rem(44);
+  .block__title {
+    @include element-invisible;
+  }
+  .block__content, .pane-content {
+    @include resetList;
+    text-align: right;
+    ul{display: block}
+    li {
+      display: inline-block;
+      margin-left: .5em;
+      vertical-align: middle;
+    }
+    a {
+      height: rem(44);
+      line-height: rem(44);
+      display: block;
+      &[href*='about'] {
+        padding: 0 1em;
+        background-image: linear-gradient(to bottom, #303030, #1d1d1d, #303030);
+        color: $white;
+        box-shadow: 0 0 $thin rgba($white, .2) inset, 0 0 $thin rgba($ultra, 1);
+        border-radius: rem(5);
+        text-shadow: 0 .1em rgba($ultra, .65);
+        text-decoration: none;
+        font-weight: bold;
+        &:hover {
+          background-image: linear-gradient(to bottom, #1d1d1d, #303030, #1d1d1d);
+        }
+        &:before {
+          @include icon__font;
+          content: $icon-info-sign;
+          font-size: rem(18);
+          display: inline-block;
+          vertical-align: text-bottom;
+          line-height: 0.9;
+          margin-right: $ex;
+        }
+      }
+      &%iconb {
+        @include ir;
+        height: rem(44);
+        width: rem(44);
+        background-size: 100%;
+      }
+      @each $sn in facebook, vk, odnoklassniki, twitter {
+        &[href*='#{$sn}'] {
+          @extend %iconb;
+          background-image: image-url('#{$sn}.png');
+        }
+      }
+    }
+  }
+  @include breakpoint(micro){
+    position: static;
+    height: auto;
+    .menu{text-align: center}
+  }
+
+}
+

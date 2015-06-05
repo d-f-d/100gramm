@@ -1,0 +1,106 @@
+/*******************************************************************************
+<<<<<<< HEAD
+ * _base.scss
+ *
+ * Base styles define the default look for HTML and common Drupal elements.
+ *
+ * These rules will generally be made up of element selectors for HTML elements
+ * such as headings, paragraphs and lists. Common Drupal elements such as form
+ * items, collapsible fieldsets and messages should be included in this partial.
+ *
+ * The styleguide module (http://drupal.org/project/styleguide) gives you a good
+ * overview of Drupal's common elements for styling. By setting a solid baseline
+=======
+ * _base.scss 
+
+ * Base styles define the default look for HTML and common Drupal elements. 
+ *
+ * These rules will generally be made up of element selectors for HTML elements
+ * such as headings, paragraphs and lists. Common Drupal elements such as form
+ * items, collapsible fieldsets and messages should be included in this partial.
+ *
+ * The styleguide module (http://drupal.org/project/styleguide) gives you a good
+ * overview of Drupals common elements for styling. By setting a solid baseline
+>>>>>>> sandbox/7.x-4.x
+ * before adding any more specific customisations you ensure that as any new
+ * features are added they will be correctly styled without any extra work.
+ ******************************************************************************/
+
+
+//  Nodes & comments
+
+.node {
+  margin: 0 0 $space;
+}
+
+.node__links, .comment__links {
+  margin: 0;
+  text-align: left; /* LTR */
+}
+
+/*.picture, .comment .submitted {
+  float: right; *//* LTR *//*
+  clear: right; *//* LTR *//*
+  padding-left: 1em; *//* LTR *//*
+}*/
+
+/*.new {
+  color: #ffae00;
+  font-size: .92em;
+  font-weight: bold;
+  float: right; *//* LTR *//*
+}*/
+/*
+
+.preview .node, .preview .comment, .sticky {
+  margin: 0;
+  padding: .5em 0;
+  border: 0;
+}
+
+.sticky {
+  padding: 1em;
+  background-color: $white;
+  border: $thin solid #e0e5fb;
+  margin-bottom: 2em;
+}
+*/
+
+#comments {
+  position: relative;
+}
+
+#comments h2.comments {
+  padding: $ex 0;
+}
+
+.comment {
+  padding: $space 0;
+}
+
+.indented {
+  margin-left: 25px; /* LTR */
+}
+
+.comment h3 a.active {
+  color: #494949;
+}
+
+.menu a, .menu .nolink {
+  cursor: pointer;
+  display: block;
+}
+
+//  Autocomplete.
+
+#autocomplete li {
+  cursor: default;
+  padding: $thick;
+  margin: 0;
+}
+
+@import "base/table";
+@import "base/form";
+@import "base/button";
+@import "base/media";
+@import "base/fileInput";

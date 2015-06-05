@@ -1,0 +1,176 @@
+<?php
+function example_menu() {
+  $items = array();
+  $items['example'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('example_kickass_form'),
+    'title' => 'example kickass form',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['example/2.0'] = array(
+    'page callback' => 'example_kickass_placeholder',
+    'title' => 'example kickass form 2.0',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['example/2.0/ajax'] = array(
+    'page callback' => 'example_kickass_placeholder_ajax',
+    'access callback' => TRUE,
+    'delivery callback' => 'ajax_deliver',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function example_kickass_placeholder_ajax() {
+  $result['#type'] = 'ajax';
+  $form = drupal_get_form($_POST['arg']['form_id']);
+  $result['#commands'][] = array(
+    'command' => 'insert',
+    'data' => render($form)
+  );
+  return $result;
+}
+
+function example_kickass_placeholder() {
+  $id = drupal_html_id(__FUNCTION__);
+  $path = drupal_get_path('module', 'example');
+  $content['placeholder'] = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'id' => $id,
+      'class' => array('kickass_placeholder'),
+      'data-form_id' => 'example_kickass_form',
+    ),
+    '#attached' => array(
+      'library' => array(array('system', 'drupal.ajax')),
+      'css' => array($path . '/css/example.css'),
+      'js' => array($path . '/js/example.js'),
+    )
+  );
+  return $content;
+}
+
+function example_kickass_form($form, &$form_state) {
+  $id = drupal_html_id(__FUNCTION__);
+  if (isset($form['#id']) && $form['#id']) {
+    return $form;
+  }
+  $step = isset($form_state['input']['step']) ? $form_state['input']['step'] : 0;
+  $form['step'] = array('#type' => 'hidden', '#value' => $step);
+  $form['messages'] = array('#theme' => 'status_messages',);
+  $form['markup']['#markup'] = '<p>Step - ' . $step . '</p>';
+  $form['#id'] = $id;
+
+  switch ($step) {
+    case 0:
+      example_kickass_form_0($form, $form_state);
+      break;
+    case 1:
+      example_kickass_form_1($form, $form_state);
+      break;
+  }
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Next'),
+    '#name' => 'next',
+    '#ajax' => array(
+      'callback' => __FUNCTION__,
+      'wrapper' => $id,
+    )
+  );
+  return $form;
+}
+
+function example_kickass_form_0(&$form, &$form_state) {
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => 'name',
+    '#required' => TRUE
+  );
+  $form['pass'] = array(
+    '#type' => 'password_confirm',
+    '#title' => t('Password'),
+    '#size' => 25,
+    '#required' => TRUE
+  );
+  $form += example_kickass_form_ajax_elements($form, $form_state);
+}
+
+function example_kickass_form_ajax_elements($form, &$form_state) {
+  if (isset($form[__FUNCTION__])) {
+    return $form[__FUNCTION__];
+  }
+  $id = drupal_html_id(__FUNCTION__);
+  $ajax_settings = array(
+    'callback' => __FUNCTION__,
+    'wrapper' => $id,
+  );
+  $elements = array(
+    '#type' => 'container',
+    '#id' => $id,
+  );
+  $options = array(1, 2, 3, 4, 5, 6);
+  $options = array_combine($options, $options);
+  $form_state['input']['element'] = isset($form_state['input']['element']) ? $form_state['input']['element'] : array(NULL);
+
+  foreach (array_values($form_state['input']['element']) as $i => $val) {
+    $elements[$i] = array(
+      '#type' => 'container',
+      'element-'.$i => array(
+        '#name' => "element[$i]",
+        '#type' => 'select',
+        '#default_value' => $val,
+        '#options' => $options,
+      ),
+    );
+    if (count($form_state['input']['element']) > 1) {
+      $elements[$i]['remove'] = array(
+        '#type' => 'button',
+        '#name' => "element-remove[$i]",
+        '#value' => '-',
+        '#ajax' => $ajax_settings,
+        '#validate' => array('_form_clear_error', __FUNCTION__ . '_remove'),
+      );
+    }
+  }
+  $elements['add'] = array(
+    '#type' => 'button',
+    '#name' => 'element-add',
+    '#value' => '+',
+    '#attributes' => array('class' => array('add')),
+    '#ajax' => $ajax_settings,
+    '#validate' => array('_form_clear_error', __FUNCTION__ . '_add'),
+  );
+  return array(__FUNCTION__ => $elements);
+}
+
+function _form_clear_error() {
+  drupal_get_messages();
+  form_clear_error();
+}
+
+function example_kickass_form_ajax_elements_add(&$form, &$form_state) {
+  $form_state['input']['element'][] = NULL;
+}
+
+function example_kickass_form_ajax_elements_remove(&$form, &$form_state) {
+  $i = preg_replace('/[^0-9]/', '', $form_state['clicked_button']['#name']);
+  if ($form_state['input']['element'][$i] != 6) {
+    unset($form_state['input']['element'][$i]);
+  }
+  else {
+    form_set_error("element-$i", 'Нельзя удалять 6');
+  }
+}
+
+function example_kickass_form_1(&$form, &$form_state) {
+
+}
+
+function example_kickass_form_submit($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+  $form_state['input']['step']++;
+}

@@ -1,0 +1,40 @@
+
+.table {
+  width: 100%;
+  background: transparent;
+}
+
+.table tr:first-child {
+  border-top: none;
+}
+
+.table tr {
+  border-top: $thin solid $system;
+}
+
+.table thead {
+  border-bottom: $thick solid $system;
+}
+
+.table th, .table td {
+  padding: $ex;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  font-weight: bold;
+  background: transparent;
+}
+
+.table thead th {
+  vertical-align: bottom;
+}
+
+.table tr.odd td {
+  background-color: #F5F5F5;
+}
+
+.table tr.even td {
+  background-color: $white;
+}

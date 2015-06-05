@@ -1,0 +1,62 @@
+$grid-columns-default: 12 !default;
+
+@mixin g-row($margin: 0) {
+  @include clearfix;
+  @if $margin != 0 {
+    @include _(g-row__margin--#{$margin}) {
+      margin-left:  -1%;
+      margin-right: -1%;
+      margin-left:  unquote("calc(0% - #{$margin/2})");
+      margin-right: unquote("calc(0% - #{$margin/2})");
+    }
+  }
+}
+
+@mixin g-columns($columns, $margin: 0, $grid-columns: $grid-columns-default) {
+  $width: percentage($columns / $grid-columns);
+  @include _(g-columns__width--#{$width}--#{$margin}) {
+    @if $margin != 0 {
+      width: $width - 2%;
+      width: unquote("calc(#{$width} - #{$margin})");
+    } @else {
+      width: $width;
+    }
+  }
+  @include _(g-columns__float) {
+    float: left;
+  }
+  @if $margin != 0 {
+    @include _(g-columns__margin--#{$margin}) {
+      margin-left:  1%;
+      margin-right: 1%;
+      margin-left:  unquote("calc(0% + #{$margin/2})");
+      margin-right: unquote("calc(0% + #{$margin/2})");
+    }
+  }
+}
+
+@mixin g-push($columns, $grid-columns: $grid-columns-default) {
+  position: relative;
+  left: percentage($columns / $grid-columns);
+}
+
+@mixin g-pull($columns, $grid-columns: $grid-columns-default) {
+  position: relative;
+  left: percentage($columns / $grid-columns);
+}
+
+@mixin g-make($margin: 0, $prefix: '', $grid-columns: $grid-columns-default) {
+  .g#{$prefix}-row {
+    @include g-row($margin);
+  }
+  @for $columns from 1 through ($grid-columns) {
+    .g#{$prefix}-columns-#{$columns} {
+      @include g-columns($columns, $margin, $grid-columns);
+    }
+  }
+  .g#{$prefix}-column-first {
+    @include _(g-column-first) {
+      clear: left;
+    }
+  }
+}

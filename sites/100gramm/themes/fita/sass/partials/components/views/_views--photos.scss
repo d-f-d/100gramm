@@ -1,0 +1,31 @@
+.view-photos {
+
+  @include breakpoint(small, false) {
+    .view-content {
+      @include g-row($space);
+    }
+    .views-row {
+      @include g-columns(4, $space);
+    }
+  }
+  @include breakpoint(mini, small) {
+    .view-content {
+      @include g-row($space);
+    }
+    .views-row {
+      @include g-columns(6, $space);
+    }
+  }
+
+  .field--name-field-photo {
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      @include bx-sz;
+      border: .3em solid $white;
+      border-radius: $br;
+      box-shadow: $thin $thin rem(5) rgba(#000, .2);
+    }
+  }
+}

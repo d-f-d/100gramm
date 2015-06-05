@@ -1,0 +1,90 @@
+.customfile-input {
+  @include element-invisible;
+}
+
+.customfile {
+  cursor: pointer;
+  width: auto;
+  display: inline-block;
+  position: relative;
+}
+
+.customfile-disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.customfile-feedback {
+  border: $thin solid #CCCCCC;
+  color: #808080;
+  display: inline-block;
+  line-height: $lh-btn;
+  padding: rem_round(1/3) 1em;
+  font-size: 1em;
+  border-radius: 0.3333333em 0 0 0.3333333em;
+  box-shadow: inset 0 $thin .25em rgba($ultra, 0.1);
+  vertical-align: middle;
+  margin-right: rem_round(-.5) !important;
+  max-width: 15em;
+}
+
+.customfile-feedback:after {
+  content: '\00a0';
+}
+
+.customfile-feedback-populated {
+  //  padding-left: 2em;
+  &:before {
+    @include icon($icon-file);
+    color: $black;
+  }
+
+  //  background: url(../images/icon-generic.gif) 5px center no-repeat;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/*file type icons*/
+.customfile-ext-jpg, .customfile-ext-gif, .customfile-ext-png, .customfile-ext-jpeg, .customfile-ext-bmp {
+  &:before { content: $icon-images-gallery; }
+  //  background-image: url(../images/icon-image.gif);
+}
+
+.customfile-ext-mp3, .customfile-ext-mp4, .customfile-ext-mov, .customfile-ext-swf, .customfile-ext-wav, .customfile-ext-m4v {
+  &:before { content: $icon-video; }
+  //  background-image: url(../images/icon-media.gif);
+}
+
+.customfile-ext-zip, .customfile-ext-tar, .customfile-ext-sit {
+  &:before { content: $icon-archive; }
+  //  background-image: url(../images/icon-zip.gif);
+}
+
+.customfile .btn:before {
+  @include icon($icon-legacyfilemanager);
+}
+
+.form-submit[name$=upload_button]:before {
+  @include icon($icon-uploadalt);
+}
+
+.form-submit[name$=remove_button]:before {
+  @include icon($icon-deletefile);
+}
+
+
+.form-submit {
+  &[name$=upload_button], &[name$=remove_button] {
+    &.progress-disabled:before {
+      content: $icon-loadingalt;
+      animation: rotate 0.5s infinite linear;
+      width: 1em;
+    }
+    + .ajax-progress {
+      display: none;
+    }
+  }
+}
+

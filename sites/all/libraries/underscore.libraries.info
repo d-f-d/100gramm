@@ -1,0 +1,10 @@
+name = underscore
+vendor url = http://documentcloud.github.com/underscore/
+download url = http://documentcloud.github.com/underscore/
+version = 1.4.4
+files[js][] = underscore-min.js
+files[js][] = underscore-noConflict.js
+files[js][] = underscore-extentions.js
+variants[uncompress][files][js][] = underscore.js
+variants[uncompress][files][js][] = underscore-noConflict.js
+variants[uncompress][files][js][] = underscore-extentions.js

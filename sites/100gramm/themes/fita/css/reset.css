@@ -1,0 +1,235 @@
+@charset "UTF-8";
+/* Grays*/
+/* Colors*/
+/* Links*/
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, nav, section, summary {
+  display: block;
+}
+
+audio, canvas, video {
+  display: inline-block;
+}
+
+figure {
+  margin: 0;
+}
+
+table, tbody, tr, td, pre {
+  font-size: inherit;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:before, q:before, q:before {
+  content: "«";
+}
+blockquote:after, blockquote:after, q:after, q:after {
+  content: "»";
+}
+
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 0.57143rem 0;
+  padding: 0;
+  clear: both;
+}
+
+input, select {
+  vertical-align: baseline;
+}
+
+input[type=radio], input[type=checkbox] {
+  vertical-align: middle;
+}
+
+select {
+  max-width: 15rem;
+}
+
+button, input, select, textarea, .button {
+  margin: 0;
+}
+
+a:hover, a:active {
+  outline: none;
+}
+
+ul, ol {
+  margin: 0.57143rem 0;
+  padding: 0 0 0 1.28571rem;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+small {
+  font-size: 85%;
+}
+
+b, strong, th {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin: 0.57143rem 0;
+}
+table [valign="middle"] {
+  vertical-align: middle;
+}
+table [valign="top"] {
+  vertical-align: top;
+}
+table [valign="bottom"] {
+  vertical-align: bottom;
+}
+
+tbody {
+  border: none;
+}
+
+td, th {
+  background: none;
+  vertical-align: top;
+  padding: 2px;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+
+sup {
+  top: 0.28571rem;
+}
+
+sub {
+  bottom: -0.28571rem;
+}
+
+i, em {
+  font-style: italic;
+}
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 1.07143rem;
+}
+
+textarea {
+  overflow: auto;
+}
+
+a, label[for], input[type="button"], input[type="submit"], input[type="image"], button {
+  cursor: pointer;
+}
+
+button, input, select, textarea {
+  font-size: 100%;
+  font-family: inherit;
+  margin: 0;
+  vertical-align: middle;
+}
+
+button, input {
+  line-height: normal;
+}
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0 none;
+  padding: 0;
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  font-family: inherit;
+}
+
+label, select, button, input[type="button"], input[type="reset"], input[type="submit"], input[type="radio"], input[type="checkbox"] {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.35714rem 0;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 160%;
+  margin-bottom: 0.57143rem;
+}
+
+h2 {
+  font-size: 145%;
+}
+
+h3 {
+  font-size: 130%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 110%;
+}
+
+h6 {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.57143rem 0;
+}

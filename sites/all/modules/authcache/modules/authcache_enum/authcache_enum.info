@@ -1,0 +1,12 @@
+name = Authcache Enumerate
+description = Provides methods for computing and enumerating authcache keys
+package = Performance and scalability
+core = 7.x
+dependencies[] = authcache
+
+; Information added by Drupal.org packaging script on 2015-05-04
+version = "7.x-2.0-beta5"
+core = "7.x"
+project = "authcache"
+datestamp = "1430751807"
+

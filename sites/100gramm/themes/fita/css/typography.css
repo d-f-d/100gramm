@@ -1,0 +1,80 @@
+/* Grays*/
+/* Colors*/
+/* Links*/
+html {
+  font-size: 14px;
+}
+
+body {
+  color: #222;
+  background-color: #fff;
+  line-height: 1.5;
+  font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 0.92857rem;
+  }
+}
+@media (max-width: micro0px) {
+  body {
+    font-size: 0.85714rem;
+  }
+}
+
+a {
+  border: none;
+  color: #1C94C4;
+  text-decoration: none;
+}
+a::before, a, a::after {
+  transition-property: color, background-color, border-color, box-shadow, opacity;
+  transition-duration: .2s;
+}
+a img {
+  border: none;
+  outline: none;
+}
+a:hover {
+  text-decoration: underline;
+  outline: none;
+  color: #1e7293;
+}
+a.js {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+}
+
+.to-left {
+  float: left;
+  margin-right: 0.57143rem;
+}
+
+.to-right {
+  float: right;
+  margin-left: 0.57143rem;
+}
+
+.element-invisible {
+  clip: rect(0, 0, 0, 0);
+  position: absolute !important;
+}
+
+.resetTypografy * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.clearfix:after, .clearfix:before {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  overflow: hidden;
+}
+
+.clear {
+  clear: both;
+  float: none;
+}

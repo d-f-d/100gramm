@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Starter kit feature.
+ */
+
+include_once 'features_starter_kit.features.inc';

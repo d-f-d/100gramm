@@ -1,0 +1,68 @@
+<?php
+
+function libraries_loader_menu() {
+  $items['libraries_loader/%'] = array(
+    'page callback'     => 'libraries_loader_exec',
+    'delivery callback' => 'ajax_deliver',
+    'access callback'   => TRUE,
+    'weight'            => 0,
+    'type'              => MENU_CALLBACK
+  );
+  return $items;
+}
+
+function libraries_loader_exec() {
+  drupal_add_http_header('Cache-Control', 'public');
+  drupal_add_http_header("Expires", date("r", time() + 3600 * 24));
+  drupal_static_reset('drupal_add_js');
+  drupal_static_reset('drupal_add_css');
+  if (arg(1)) {
+    drupal_add_library(arg(1), arg(2)) || libraries_load(arg(1));
+  }
+  $commands = array();
+  $css = drupal_add_css();
+  drupal_alter('css', $css);
+  uasort($css, 'drupal_sort_css_js');
+  foreach ($css as $name => $data) {
+    $commands[] = array(
+      'command' => "add_css", 'name' => $name,
+      'data'    => drupal_get_css(array($name => $data), TRUE)
+    );
+  }
+  $js = drupal_add_js();
+  drupal_alter('js', $js);
+  unset($js['settings']);
+  uasort($js, 'drupal_sort_css_js');
+  foreach ($js as $name => $data) {
+    $commands[] = array(
+      'command' => "add_js", 'name' => $name,
+      'data'    => drupal_get_js('header', array($name => $data), TRUE)
+    );
+  }
+  $page = array('#type' => 'ajax', '#commands' => $commands);
+  return $page;
+}
+
+function _libraries_loader_init() {
+  drupal_add_js(array('queryString' => $GLOBALS['conf']['css_js_query_string']), 'setting');
+  drupal_add_js(drupal_get_path('module', 'libraries_loader') . '/libraries_loader.js', array('scope' => 'page_top'));
+}
+
+function libraries_loader_libraries_info() {
+  $libraries = array();
+  $libraries["libraries_loader"] = array(
+    'name'         => "libraries_loader",
+    'library path' => drupal_get_path('module', 'libraries_loader'),
+    'version'      => '1',
+    'callbacks'    => array('post-load' => array('_libraries_loader_init')),
+    'dependencies' => array('jquery.topic'),
+    'files'        => array(),
+  );
+  return $libraries;
+}
+function libraries_loader_process_html(&$vars) {
+  $scripts = drupal_get_js('page_top');
+  if ($scripts) {
+    $vars['page_top'].= $scripts;
+  }
+}

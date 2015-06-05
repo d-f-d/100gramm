@@ -1,0 +1,17 @@
+.l-page {
+  background: image-url('l-page.jpg') fixed top left #d97d38;
+}
+
+.l-main {
+  @include bx-sz();
+  background: #ebebeb;
+  box-shadow: 0 0 2em rgba(#000, .3);
+  border-radius: 0 0 $br $br;
+  border: $thin solid $white;
+}
+
+h1:empty {
+  display: none;
+}
+
+@import "regions/*";

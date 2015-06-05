@@ -1,0 +1,41 @@
+#tabs-wrapper {
+  position: relative;
+}
+
+.tabs--primary, .tabs--secondary {
+  &, li {
+    border: 0;
+    background: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.tabs--primary {
+  padding: 0;
+  font-size: 90%;
+}
+
+.tabs--secondary {
+  clear: both;
+  text-align: left; /* LTR */
+}
+
+.tabs--primary a, .tabs--secondary a {
+  border: 0;
+  background: transparent;
+  padding: $thick $ex;
+  margin: 0 0 0 $thin; /* LTR */
+  height: auto;
+  text-decoration: none;
+  position: relative;
+  top: -$thin;
+  display: inline-block;
+}
+
+.tabs--primary, .tabs--secondary {
+  .active a, a:hover {
+    background: #A6CEE7;
+    color: $white;
+  }
+}

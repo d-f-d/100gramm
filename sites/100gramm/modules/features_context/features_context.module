@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Features Context feature.
+ */
+
+include_once 'features_context.features.inc';

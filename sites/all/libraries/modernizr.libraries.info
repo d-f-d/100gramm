@@ -1,0 +1,5 @@
+name = modernizr
+version = 2.6.1
+vendor url = http://modernizr.com/
+download url = http://modernizr.com/download/
+files[js][] = modernizr.js

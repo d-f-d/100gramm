@@ -1,0 +1,199 @@
+@mixin input {
+  border: $thin solid $system;
+  box-shadow: 0 0 rem_round(.9) rgba($ui-main, 0), inset 0 $thin rem_round(1/3) $system;
+  transition-duration: .2s;
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  background-color: $white;
+  color: $black;
+  padding: rem_round(1/3);
+  &[disabled] {
+    background-color: $system;
+  }
+  &[readonly] {
+    background-color: mix($system, $white);
+  }
+}
+
+@mixin input-focus {
+  border-color: $ui-main;
+  box-shadow: 0 0 rem_round(.5) $ui-main, inset 0 $thin rem_round(.5) $system;
+}
+
+form {
+  input[type=text], .form-text, select, textarea {
+    @include input;
+    &:focus {
+      @include input-focus;
+    }
+  }
+  input[type=checkbox], input[type=radio] {
+    border: none;
+    padding: 0;
+  }
+  input, select {
+    border-radius: $br;
+  }
+  textarea {
+    border-radius: $br $br 0 0;
+  }
+  input.error, textarea.error {
+    border: $thin solid $red;
+    color: $black;
+  }
+  fieldset {
+    background: $white;
+    margin: 1em 0;
+    color: $black;
+    border: $thin solid $system;
+    border-radius: $br;
+    padding: 1em;
+    &.vertical-tabs-pane {
+      border: none;
+      padding: 0 1em;
+    }
+    &.filter-wrapper {
+      border-radius: 0 0 $br $br;
+    }
+    legend {
+      color: mix($black, $white, 80%);
+      font-weight: 600;
+      padding: 0 1em;
+    }
+    &.collapsed {
+      border-radius: 0;
+      padding-top: 0;
+      border-color: $system transparent transparent;
+    }
+  }
+  legend {
+    font-family: "PT Sans Narrow", sans-serif;
+    background: $white;
+    padding: $ex;
+    border: $thin solid $system;
+    border-radius: $br;
+  }
+  .vertical-tabs {
+    background: $white;
+  }
+  .description {
+    color: mix($black, $white, 80%);
+  }
+  .form-required {
+    color: $ui-main;
+  }
+}
+
+html.js fieldset.collapsed {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: $ex;
+}
+
+html.js fieldset.collapsible .fieldset-legend {
+  padding-left: 2em; /* LTR */
+  background: url("data:image/gif;base64,R0lGODlhCgAKAMQUAM/Q0vT09Ojr7s7Q0dLU1f7+/u/z9+Dj5tfX1+Dg4MrKyufq7tfZ27m5uba2tsLCwvv7+7W1tbS0tP////P3+wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABQALAAAAAAKAAoAAAU0ICWOZGkCkaRKEUAtTzHNU/Es1JDQUzKIggZkBmkIRgTEDEEgGRyBgMNQYigUDBPlcCCFAAA7") no-repeat 0 50%; /* LTR */
+}
+
+html.js fieldset.collapsed .fieldset-legend {
+  background: url("data:image/gif;base64,R0lGODlhCgAKAMQWALm5ucLCwvv7+/H1+NLU1c7Q0dbW1uHk58nJyba2ttjb3c3P0OHh4dfZ2/T09Obq7eLi4vPz88zO0Ofq7rS0tP////P3+wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABYALAAAAAAKAAoAAAUtoCVOYlkWwUKaFlUxADGYbiUYiVLWVRUhBxGv4gAKe7dEY1eBxGangOTBGlVDADs=") no-repeat 0 50%; /* LTR */
+}
+
+.inputUI-wrap {
+  position: relative;
+  width:  1em;
+  height: 1em;
+  margin: $thin rem_round(1/3) rem_round(1/3) 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.inputUI-processed, .ui-checkbox, .ui-radio {
+  position: absolute;
+  left:   0;
+  top:    0;
+  height: 100%;
+  width:  100%;
+  margin: 0 !important;
+}
+
+.inputUI-processed {
+  opacity: 0;
+  z-index: 1;
+}
+
+.ui-checkbox, .ui-radio {
+  z-index: 0;
+}
+
+.ui-checkbox, .ui-radio {
+  @include input;
+  padding: 0;
+  @include bx-sz;
+  &::before {
+    content: "";
+    position: absolute;
+    top:    0;
+    left:   0;
+    bottom: 0;
+    right:  0;
+    border: $thin solid transparent;
+    background-color: rgba($ui-second, 0);
+    background-clip: content-box;
+  }
+}
+
+.inputUI-processed:checked + .ui-checkbox::before, .inputUI-processed:checked+.ui-radio::before {
+  background-color: $ui-second;
+}
+
+.inputUI-processed:focus + .ui-checkbox, .inputUI-processed:focus+.ui-radio {
+  @include input-focus;
+}
+
+.inputUI-processed:active + .ui-checkbox, .inputUI-processed:active+.ui-radio {
+  background-color: $system;
+}
+
+.inputUI-processed[disabled] + .ui-checkbox, .inputUI-processed[disabled]+.ui-radio {
+  background-color: $system;
+  &::before {
+    opacity: .5;
+  }
+}
+
+.ui-radio, .ui-radio::before {
+  border-radius: 50%;
+}
+
+html.js input.form-autocomplete {
+  background-position: 100% 5px;
+}
+
+html.js input.throbbing {
+  background-position: 100% -15px;
+}
+
+@mixin plain-button {
+  background: $ui-main;
+  border-radius: 0;
+  border: none;
+//  padding: .2em 1ex;
+  position: relative;
+  &:active {
+    top:  $thin;
+    left: $thin;
+  }
+}
+
+.file-icon {
+  vertical-align: middle;
+}
+
+.form-item, .form-actions {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.ui-spinner-input {
+  box-shadow: none !important;
+}

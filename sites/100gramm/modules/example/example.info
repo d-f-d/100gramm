@@ -1,0 +1,4 @@
+name = example
+description = example multistep ajax form
+core = 7.x
+version = "7.x-0.1"

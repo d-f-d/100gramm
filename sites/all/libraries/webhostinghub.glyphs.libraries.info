@@ -1,0 +1,4 @@
+name = webhostinghub.glyphs
+version = 2075
+files[css][] = css/whhg.css
+variants[cdn][files][css][] = css/whhg.cdn.css

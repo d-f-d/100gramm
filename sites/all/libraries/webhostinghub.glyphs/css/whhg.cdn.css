@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'WebHostingHub-Glyphs';
+  src: url('https://googledrive.com/host/0B2-GXrkrarQUQ3NHeHpsVmU2ZlU/all/libraries/webhostinghub.glyphs/font/webhostinghub-glyphs.eot?2075');
+  src: url('https://googledrive.com/host/0B2-GXrkrarQUQ3NHeHpsVmU2ZlU/all/libraries/webhostinghub.glyphs/font/webhostinghub-glyphs.eot#2075') format('embedded-opentype'),
+       url('https://googledrive.com/host/0B2-GXrkrarQUQ3NHeHpsVmU2ZlU/all/libraries/webhostinghub.glyphs/font/webhostinghub-glyphs.ttf?2075') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  -moz-font-feature-settings: "calt=0,liga=0";
+}

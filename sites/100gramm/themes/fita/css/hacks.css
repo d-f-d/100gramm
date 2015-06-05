@@ -1,0 +1,40 @@
+/* Grays*/
+/* Colors*/
+/* Links*/
+@media (max-width: 480px) {
+  #admin-menu {
+    display: none;
+  }
+
+  html body.admin-menu {
+    margin-top: 0 !important;
+  }
+}
+.text-format-wrapper {
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
+.wysiwyg-toggle-wrapper {
+  padding: 0.35714rem 14px 0;
+  border-left: 1px solid #c8c8c8;
+  border-right: 1px solid #c8c8c8;
+}
+.wysiwyg-toggle-wrapper a {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+}
+.wysiwyg-toggle-wrapper a:hover {
+  text-decoration: none;
+  border-bottom-style: solid;
+}
+
+table.mceLayout {
+  border-left: 1px solid #c8c8c8 !important;
+  border-right: 1px solid #c8c8c8 !important;
+}
+
+#chrome-frame, .ui-front {
+  z-index: 9999;
+}

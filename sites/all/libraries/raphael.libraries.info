@@ -1,0 +1,7 @@
+name = raphael
+vendor url = http://raphaeljs.com/
+download url = https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js
+version = 2.1.0
+files[js][] = raphael.js
+variants[packed][files][js][] = raphael-packed.js
+variants[min][files][js][] = raphael-min.js

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "bdelespierre/underscore",
+    "version": "dev-master",
+    "version_normalized": "9999999-dev",
+    "source": {
+      "type": "git",
+      "url": "https://github.com/bdelespierre/underscore.php.git",
+      "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318"
+    },
+    "dist": {
+      "type": "zip",
+      "url": "https://api.github.com/repos/bdelespierre/underscore.php/zipball/f9b328bc4d02f2edb0c43fe275764469a3fc7318",
+      "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318",
+      "shasum": ""
+    },
+    "require": {
+      "php": ">=5.4.0"
+    },
+    "require-dev": {
+      "atoum/atoum": "dev-master"
+    },
+    "time": "2015-01-12 17:02:16",
+    "type": "library",
+    "installation-source": "source",
+    "autoload": {
+      "psr-0": {
+        "Underscore": "src/"
+      }
+    },
+    "notification-url": "https://packagist.org/downloads/",
+    "license": [
+      "LGPL"
+    ],
+    "authors": [
+      {
+        "name": "Benjamin Delespierre",
+        "email": "benjamin.delespierre@gmail.com"
+      }
+    ],
+    "description": "Underscore.js port in PHP",
+    "homepage": "https://github.com/bdelespierre/underscore.php",
+    "keywords": [
+      "JS",
+      "php",
+      "underscore",
+      "utility"
+    ]
+  }
+]
