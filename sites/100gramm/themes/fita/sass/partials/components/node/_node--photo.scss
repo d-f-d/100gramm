@@ -1,21 +1,21 @@
-.node--photo--full {
-  .group-left, .group-right {
+.e-node--b-photo--v-full {
+  &__r-first, &__r-second {
     float: none;
     width: auto;
   }
-  @include breakpoint(desk) {
+  @include breakpoint(small, false) {
     @include g-row($space);
-    .group-left {
+    &__r-first {
       @include g-columns(7, $space);
     }
-    .group-right {
+    &__r-second {
       @include g-columns(5, $space);
     }
-    .group-footer {
+    &__r-footer {
       @include g-columns(12, $space);
     }
   }
-  .field--name-field-photo {
+  &__f-field-photo {
     margin-bottom: .6em;
     img {
       border: rem(4) solid $white;
@@ -24,46 +24,68 @@
       margin: auto;
     }
   }
-
-  .field--name-photografer {
+  &__f-like {
+    @include breakpoint(small, false) {
+      text-align: right;
+    }
+    @include breakpoint(small) {
+      text-align: center;
+    }
+    > span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    margin-bottom: .6em;
+  }
+  &__f-author {
     margin-bottom: .6em;
     text-align: center;
-    @include breakpoint(desk) {
+    @include breakpoint(small, false) {
       @include to-right;
     }
-    @include breakpoint(mini) {
+    @include breakpoint(small) {
       @include to-left;
     }
-    @include breakpoint(micro) {
+    @include breakpoint(mini) {
       @include clear;
     }
     img {
       max-width: rem(100);
     }
   }
-  .field--name-like-it {
-    @include breakpoint(desk) {
-      text-align: right;
-    }
+  &__f-date { color: #666;
     @include breakpoint(mini) {
       text-align: center;
     }
-    .field__item > span {
-      display: inline-block;
-      vertical-align: middle;
-    }
-    margin-bottom: .6em;
   }
-  .field--name-description {
+  &__f-tags {
+    @include breakpoint(mini) {
+      text-align: center;
+    }
+    >.tag {
+      padding: 0 .5em;
+      margin: .3em 0;
+      display: inline-block;
+      background: #fa8d1e;
+      border-radius: .2em;
+      box-shadow: $thin $thin 0 rgba($ultra, .2) inset;
+      text-shadow: $thin $thin 0 rgba($ultra, .2);
+      color: $white;
+      &:hover {
+        background: #ffa64e;
+      }
+    }
+  }
+  &__f-description {
     margin: .6em 0;
     background: #47494b;
     text-shadow: 0 .1em 0 rgba(#000, .35);
     color: $white;
     padding: 1em;
-    @include breakpoint(desk) {
+    @include breakpoint(small, false) {
       clear: right;
     }
-    @include breakpoint(mini) {
+    @include breakpoint(small) {
       clear: left;
     }
     border: .1em solid #353535;
@@ -80,32 +102,11 @@
     //      border-color: transparent #47494b transparent transparent;
     //    }
   }
-  .field--name-share-it {
+
+
+  &__f-share {
     @include clear;
-    @include breakpoint(mini) {
-      text-align: center;
-    }
-  }
-  .field--name-photo--tags {
-    @include breakpoint(micro) {
-      text-align: center;
-    }
-    .tag {
-      padding: 0 .5em;
-      margin: .3em 0;
-      display: inline-block;
-      background: #fa8d1e;
-      border-radius: .2em;
-      box-shadow: $thin $thin 0 rgba($ultra, .2) inset;
-      text-shadow: $thin $thin 0 rgba($ultra, .2);
-      color: $white;
-      &:hover {
-        background: #ffa64e;
-      }
-    }
-  }
-  .field--name-photo--created-time { color: #666;
-    @include breakpoint(micro) {
+    @include breakpoint(small) {
       text-align: center;
     }
   }

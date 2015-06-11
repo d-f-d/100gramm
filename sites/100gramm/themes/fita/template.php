@@ -23,6 +23,3 @@ function fita_preprocess_views_view_table(&$vars) {
   $vars['classes_array'][] = 'table';
 }
 
-function fita_preprocess_panels_everywhere_page(&$var) {
-  drupal_alter('preprocess_page', $var);
-}

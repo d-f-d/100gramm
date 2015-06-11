@@ -11,7 +11,7 @@ $pagination-disabled-color: $gray-dark;
   clear: both;
   padding: 0;
   text-align: center;
-  margin: $space 0 0;
+  margin: 0;
   border-radius: $border-radius-base;
   letter-spacing: -1em;
 }
@@ -23,7 +23,6 @@ $pagination-disabled-color: $gray-dark;
   list-style-type: none;
   padding: 0;
   a, span {
- //   font-size: 14px;
     display: inline-block;
     padding: rem(4) 1em;
     line-height: $line-height-base;
@@ -42,13 +41,13 @@ $pagination-disabled-color: $gray-dark;
   }
   &:first-child {
     a, span {
-//      border-left-width: $thin;
-//      border-radius: $border-radius-base 0 0 $border-radius-base;
+      //      border-left-width: $thin;
+      //      border-radius: $border-radius-base 0 0 $border-radius-base;
     }
   }
   &:last-child {
     a, span {
-//      border-radius: 0 $border-radius-base $border-radius-base 0;
+      //      border-radius: 0 $border-radius-base $border-radius-base 0;
     }
   }
 }

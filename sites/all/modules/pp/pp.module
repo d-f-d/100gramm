@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the pp feature.
- */
-
-include_once 'pp.features.inc';

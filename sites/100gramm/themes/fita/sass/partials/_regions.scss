@@ -1,3 +1,5 @@
+@import "../layouts/fita-simple/fita-simple.layout";
+
 .l-page {
   background: image-url('l-page.jpg') fixed top left #d97d38;
 }
@@ -15,3 +17,4 @@ h1:empty {
 }
 
 @import "regions/*";
+

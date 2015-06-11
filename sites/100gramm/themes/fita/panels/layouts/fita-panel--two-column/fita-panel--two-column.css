@@ -1,0 +1,12 @@
+.panels-dnd .fita-panel--two-column__first{
+    float: left;
+    width: 50%;
+}
+.panels-dnd .fita-panel--two-column__second{
+    float: left;
+    width: 50%;
+}
+.panels-dnd .fita-panel--two-column__footer{
+    float: none;
+    clear: both;
+}

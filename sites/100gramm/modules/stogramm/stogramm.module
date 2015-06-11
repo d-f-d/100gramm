@@ -196,3 +196,4 @@ function stogramm_node_load($nodes) {
     }
   }
 }
+

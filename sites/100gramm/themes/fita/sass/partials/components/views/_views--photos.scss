@@ -1,23 +1,19 @@
-.view-photos {
-
+.photo-grid {
   @include breakpoint(small, false) {
-    .view-content {
-      @include g-row($space);
-    }
-    .views-row {
+    @include g-row($space);
+    &__item {
       @include g-columns(4, $space);
     }
   }
   @include breakpoint(mini, small) {
-    .view-content {
-      @include g-row($space);
-    }
-    .views-row {
+    @include g-row($space);
+    &__item {
       @include g-columns(6, $space);
     }
   }
 
-  .field--name-field-photo {
+  &__item {
+    margin-bottom: $space;
     img {
       display: block;
       width: 100%;

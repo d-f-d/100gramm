@@ -1,0 +1,13 @@
+{
+  "name": "100gramm vendor components",
+  "require": {
+    "php": ">=5.4.0",
+    "bdelespierre/underscore": "dev-master",
+    "symfony/yaml": "2.7.0",
+    "twig/twig": "~1.0"
+  },
+  "config": {
+    "autoloader-suffix": "ComposerManager",
+    "vendor-dir": "../all/vendor"
+  }
+}

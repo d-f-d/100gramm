@@ -1,9 +1,0 @@
-<?php
-
-function d_submodules_enable() {
-  variable_set('d_submodules_reset', TRUE);
-}
-
-function d_submodules_disable() {
-  variable_del('d_submodules_reset');
-}

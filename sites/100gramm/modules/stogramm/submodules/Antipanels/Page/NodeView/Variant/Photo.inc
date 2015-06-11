@@ -1,0 +1,44 @@
+<?php
+
+namespace d\Antipanels\Page\NodeView\Variant;
+
+use d\Antipanels\VariantBase;
+use d\Antipanels\RenderInterface;
+use d\Twig\Twig;
+
+class Photo extends VariantBase implements RenderInterface {
+
+  function access() {
+    return $this->context['node']->type === 'photo';
+  }
+
+  function render() {
+    drupal_set_title('');
+    return [
+      '#markup' => Twig::render(file_get_contents(__DIR__ . '/Photo.html.twig'), $this->context, 'e-node--b-photo--v-full'),
+      '#attached' => [
+        'js' => [
+          ['data' => 'var switchTo5x=true', 'type' => 'inline', 'scope' => 'footer'],
+          ['data' => 'http://w.sharethis.com/button/buttons.js', 'scope' => 'footer'],
+          [
+            'data' => 'stLight.options({publisher: "6ef8bdb3-26ac-4fbf-a188-334548b26038", doNotHash: true, doNotCopy: false, hashAddressBar: false});',
+            'type' => 'inline',
+            'scope' => 'footer'
+          ],
+        ],
+        'drupal_add_html_head' => [
+          [
+            [
+              "#tag" => 'meta',
+              "#attributes" => [
+                'property' => 'og:image',
+                'content' => file_create_url($this->context['node']->field_photo['und'][0]['uri'])
+              ]
+            ],
+            'og:image'
+          ]
+        ]
+      ]
+    ];
+  }
+}

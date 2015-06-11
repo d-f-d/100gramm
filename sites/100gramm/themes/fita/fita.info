@@ -11,6 +11,8 @@ stylesheets[all][] = css/typography.css
 stylesheets[all][] = css/fonts.css
 stylesheets[all][] = css/styles.css
 
+plugins[panels][layouts] = panels/layouts
+
 regions[header] = Header
 regions[navigation] = Navigation
 regions[highlighted] = Highlighted
