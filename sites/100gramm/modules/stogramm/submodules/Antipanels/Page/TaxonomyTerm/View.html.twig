@@ -1,0 +1,10 @@
+<div class="photo-grid">
+    {% for node in nodes %}
+        <div class="photo-grid__item">
+            <a href="{{ url('node/'~node.nid) }}">
+                {{ theme('image_style', {'style_name':'photo_grid','alt':node.title,'title':node.title, 'path':node.field_photo['und'][0]['uri']})|raw }}
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{{ theme('pager')|raw }}
