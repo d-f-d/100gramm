@@ -8,6 +8,9 @@ class Tags {
    * @implement node_presave
    */
   static function create($node) {
+    if ($node->type !== 'photo') {
+      return;
+    }
     $vid = taxonomy_vocabulary_machine_name_load('tags')->vid;
     $node->meta['tags'] = $node->meta['tags'] ?: ['fromdonetsk'];
     $exist_tags = db_select('taxonomy_term_data', 't')
