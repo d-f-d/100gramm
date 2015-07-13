@@ -37,9 +37,11 @@ function stogramm_widget() {
 //    dsm($node->title);
   }
   $output = implode('<br />', $output);
-  $output = "document.write('{$output}');";
+  $output = "document.getElementById('100gramm_widget').innerHTML = '{$output}';";
 
-  drupal_add_http_header('Content-Type', 'text/html; charset=utf-8');
+  drupal_add_http_header('Content-Type', 'text/javascript; charset=utf-8');
+  drupal_add_http_header('Expires', gmdate('D, d M Y H:i:s \G\M\T', REQUEST_TIME + (60 * 60)));
+
   echo $output;
   if ($cache = drupal_page_set_cache()) {
     drupal_serve_page_from_cache($cache);
