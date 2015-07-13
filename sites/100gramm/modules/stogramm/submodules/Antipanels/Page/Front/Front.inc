@@ -2,7 +2,6 @@
 namespace d\Antipanels\Page\Front;
 
 use d\Antipanels\RenderInterface;
-use d\Antipanels\RenderVariant;
 use Drupal\d_submodules\Callback;
 use d\Twig\Twig;
 
