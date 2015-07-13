@@ -28,7 +28,7 @@ function entitycache_load($entities, $type) {
   $cache = &$drupal_static_fast['cache'];
   $lg = $language->language;
   array_walk($entities, function ($entity) use ($type, &$cache, $lg) {
-    if ($path = entity_uri($type, $entity)['path'] && !empty($entity->path['alias'])) {
+    if ($path = entity_uri($type, $entity)['path'] && !empty($entity->_path['alias'])) {
       $cache['map'][$lg][$path] = $entity->_path['alias'];
       $cache['no_aliases'][$lg][$path . '/edit'] = 1;
       $cache['no_aliases'][$lg][$path . '/devel'] = 1;
