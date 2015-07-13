@@ -21,7 +21,11 @@ function stogramm_menu() {
 }
 
 function stogramm_widget() {
-  $nids = db_select('node', 'n')->fields('n', ['nid'])->orderBy('created', 'DESC')->range(0, 3)->execute();
+  $nids = db_select('node', 'n')
+    ->fields('n', ['nid'])
+    ->orderBy('created', 'DESC')
+    ->range(0, 3)
+    ->execute();
   $output = [];
   foreach ($nids as $node) {
     $node = entity_metadata_wrapper('node', $node->nid);
@@ -76,11 +80,11 @@ function stogramm_image_list() {
   }
   $output['login'] = [
     '#markup' => '<p>' . l('login', 'https://api.instagram.com/oauth/authorize/', [
-      'query' => [
-        'client_id' => STOGRAMM_ID,
-        'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
-        'response_type' => 'code',
-      ]
+        'query' => [
+          'client_id' => STOGRAMM_ID,
+          'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
+          'response_type' => 'code',
+        ]
       ]) . '</p>'
   ];
   $access_token = variable_get('stogramm_access_token', NULL);
@@ -99,14 +103,14 @@ function stogramm_image_list() {
   if (isset($resp['pagination']['next_min_id'])) {
     $output['pager-prev'] = [
       '#markup' => '<p>' . l('prev', current_path(), [
-        'query' => ['min_tag_id' => $resp['pagination']['next_min_id'],]
+          'query' => ['min_tag_id' => $resp['pagination']['next_min_id'],]
         ]) . '</p>'
     ];
   }
   if (isset($resp['pagination']['next_max_id'])) {
     $output['pager-next'] = [
       '#markup' => '<p>' . l('next', current_path(), [
-        'query' => ['max_tag_id' => $resp['pagination']['next_max_id'],]
+          'query' => ['max_tag_id' => $resp['pagination']['next_max_id'],]
         ]) . '</p>'
     ];
   }
@@ -160,6 +164,7 @@ function stogramm_image_save_submit($form, &$form_state) {
   $node = entity_metadata_wrapper('node', $node);
   $node->field_id = $image['id'];
   $node->field_meta = drupal_json_encode($image);
+  $node->raw()->meta = $image;
   if ($image['caption']) {
     $node->title = (strlen($image['caption']['text']) < 128) ? $image['caption']['text'] : (mb_substr($image['caption']['text'], 0, 125) . '...');
   }
@@ -172,7 +177,7 @@ function stogramm_image_save_submit($form, &$form_state) {
   $uri = $directory . '/' . drupal_basename($src);
   $file = entity_load('file', ['uri' => $uri]);
   $file = $file ? array_shift($file) : file_save_data(file_get_contents($src), $uri);
-  $node->field_photo = (array)$file;
+  $node->field_photo = (array) $file;
   $node->save();
 }
 
