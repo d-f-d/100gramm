@@ -10,7 +10,7 @@ function entity_load($entities, $type) {
   array_walk($entities, function ($entity) use ($type) {
     $path = entity_uri($type, $entity)['path'];
     if ($path && $path !== ($alias = drupal_get_path_alias($path))) {
-      $entity->path['alias'] = $alias;
+      $entity->_path['alias'] = $alias;
     }
   });
 }
@@ -29,9 +29,10 @@ function entitycache_load($entities, $type) {
   $lg = $language->language;
   array_walk($entities, function ($entity) use ($type, &$cache, $lg) {
     if ($path = entity_uri($type, $entity)['path'] && !empty($entity->path['alias'])) {
-      $cache['map'][$lg][$path] = $entity->path['alias'];
+      $cache['map'][$lg][$path] = $entity->_path['alias'];
       $cache['no_aliases'][$lg][$path . '/edit'] = 1;
       $cache['no_aliases'][$lg][$path . '/devel'] = 1;
     }
   });
+
 }
