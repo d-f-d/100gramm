@@ -1,55 +1,55 @@
 {#{% set block = 'e-node--b-photo--v-full' %}#}
 <div class=e-node--b-photo--v-full>
-    <section class=e-node--b-photo--v-full__r-first>
-        <div class=e-node--b-photo--v-full__f-field-photo>
-            <a href="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" title="{{ node.title }}" class=colorbox
-               rel="gallery-node-{{ node.nid|raw }}">
-                <img src="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" alt="{{ node.title }}"
-                     title="{{ node.title }}" height=640 width=640>
-            </a>
-        </div>
-    </section>
-    <section class=e-node--b-photo--v-full__r-second>
-        <div class=e-node--b-photo--v-full__f-like>
-            <span class=st_fblike_hcount displayText='Facebook'></span>
-            <span class=st_twitter_hcount displayText='Tweet'></span>
-            <span class=st_plusone_hcount displayText='Google +1'></span>
-        </div>
-        <div class=e-node--b-photo--v-full__f-author>
-            <figure>
-                <img src="{{ node.meta.user.profile_picture|raw }}">
-                <figcaption>
-                    <a href="//instagram.com/{{ node.meta.user.username }}" rel="nofollow me"
-                       target=_blank>{{ node.meta.user.username }}</a>
-                </figcaption>
-            </figure>
-        </div>
-        <div class=e-node--b-photo--v-full__f-date>
-            {{ node.meta.created_time|date("d/m/Y")|raw }}
-        </div>
-        <div class=e-node--b-photo--v-full__f-tags>
-            {% for tag in node.meta.tags %}
-                <a class=tag href ='/tags/{{ tag }}' >#{{ tag }}</a>
-            {% endfor %}
-        </div>
-        <div class=e-node--b-photo--v-full__f-description>
-            {{ node.meta.caption.text }}
-        </div>
-    </section>
-    <footer class=e-node--b-photo--v-full__r-footer>
-        <div class=e-node--b-photo--v-full__f-share>
-            <span class=st_facebook_large displayText='Facebook'></span>
-            <span class=st_vkontakte_large displayText='Vkontakte'></span>
-            <span class=st_googleplus_large displayText='Google +'></span>
-            <span class=st_livejournal_large displayText='LiveJournal'></span>
-            <span class=st_twitter_large displayText='Tweet'></span>
-            <span class=st_linkedin_large displayText='LinkedIn'></span>
-            <span class=st_mail_ru_large displayText='mail.ru'></span>
-            <span class=st_odnoklassniki_large displayText='Odnoklassniki'></span>
-            <span class=st_pinterest_large displayText='Pinterest'></span>
-        </div>
-        <div class=e-node--b-photo--v-full__f-comments>
-            {{ render('d\\Antipanels\\Fragment\\CackleComments', {node:node})|raw }}
-        </div>
-    </footer>
+  <section class=e-node--b-photo--v-full__r-first>
+    <div class=e-node--b-photo--v-full__f-field-photo>
+      <a href="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" title="{{ node.title }}" class=colorbox
+         rel="gallery-node-{{ node.nid|raw }}">
+        <img src="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" alt="{{ node.title }}"
+             title="{{ node.title }}" height=640 width=640>
+      </a>
+    </div>
+  </section>
+  <section class=e-node--b-photo--v-full__r-second>
+    <div class=e-node--b-photo--v-full__f-like>
+      <span class=st_fblike_hcount displayText='Facebook'></span>
+      <span class=st_twitter_hcount displayText='Tweet'></span>
+      <span class=st_plusone_hcount displayText='Google +1'></span>
+    </div>
+    <div class=e-node--b-photo--v-full__f-author>
+      <figure>
+        <img src="{{ node.meta.user.profile_picture|raw }}">
+        <figcaption>
+          <a href="//instagram.com/{{ node.meta.user.username }}" rel="nofollow me"
+             target=_blank>{{ node.meta.user.username }}</a>
+        </figcaption>
+      </figure>
+    </div>
+    <div class=e-node--b-photo--v-full__f-date>
+      {{ node.meta.created_time|date("d/m/Y")|raw }}
+    </div>
+    <div class=e-node--b-photo--v-full__f-tags>
+      {% for tag in node.meta.tags %}
+        <a class=tag href='/tags/{{ tag|transliterate }}'>#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    <div class=e-node--b-photo--v-full__f-description>
+      {{ node.meta.caption.text }}
+    </div>
+  </section>
+  <footer class=e-node--b-photo--v-full__r-footer>
+    <div class=e-node--b-photo--v-full__f-share>
+      <span class=st_facebook_large displayText='Facebook'></span>
+      <span class=st_vkontakte_large displayText='Vkontakte'></span>
+      <span class=st_googleplus_large displayText='Google +'></span>
+      <span class=st_livejournal_large displayText='LiveJournal'></span>
+      <span class=st_twitter_large displayText='Tweet'></span>
+      <span class=st_linkedin_large displayText='LinkedIn'></span>
+      <span class=st_mail_ru_large displayText='mail.ru'></span>
+      <span class=st_odnoklassniki_large displayText='Odnoklassniki'></span>
+      <span class=st_pinterest_large displayText='Pinterest'></span>
+    </div>
+    <div class=e-node--b-photo--v-full__f-comments>
+      {{ render('d\\Antipanels\\Fragment\\CackleComments', {node:node})|raw }}
+    </div>
+  </footer>
 </div>

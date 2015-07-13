@@ -5,8 +5,8 @@ class Extension extends \Twig_Extension {
   public function getFilters() {
     return [
       new \Twig_SimpleFilter('file_url', 'file_create_url'),
+      new \Twig_SimpleFilter('transliterate', 'transliteration_clean_filename'),
     ];
-
   }
 
   public function getFunctions() {
