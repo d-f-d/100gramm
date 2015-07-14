@@ -1,10 +1,10 @@
 {#{% set block = 'e-node--b-photo--v-full' %}#}
-<article class=e-node--b-photo--v-full>
+<article class=e-node--b-photo--v-full itemscope itemtype="http://schema.org/ImageObject">
   <section class=e-node--b-photo--v-full__r-first>
     <div class=e-node--b-photo--v-full__f-field-photo>
       <a href="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" title="{{ node.title }}" class=colorbox
          rel="gallery-node-{{ node.nid|raw }}">
-        <img src="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" alt="{{ node.title }}"
+        <img itemprop=image src="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" alt="{{ node.title }}"
              title="{{ node.title }}" height=640 width=640>
       </a>
     </div>
@@ -15,34 +15,36 @@
       <span class=st_twitter_hcount displayText='Tweet'></span>
       <span class=st_plusone_hcount displayText='Google +1'></span>
     </div>
-    <div class=e-node--b-photo--v-full__f-author>
+    <div class=e-node--b-photo--v-full__f-author itemscope itemprop="author" itemtype="https://schema.org/Person">
       <figure>
-        <img src="{{ node.meta.user.profile_picture|raw }}">
+        <img src="{{ node.meta.user.profile_picture|raw }}" itemprop="image">
         <figcaption>
-          <a href="//instagram.com/{{ node.meta.user.username }}" rel="nofollow me"
+          <a href="//instagram.com/{{ node.meta.user.username }}" rel="nofollow me" itemprop="sameAs"
              target=_blank>{{ node.meta.user.username }}</a>
         </figcaption>
       </figure>
     </div>
-    <div class=e-node--b-photo--v-full__f-date>
-      {{ node.meta.created_time|date("d/m/Y")|raw }}
-    </div>
+    <time class=e-node--b-photo--v-full__f-date itemprop="datePublished"
+          datetime="{{ node.created|date('c') }}">{{ node.created|drupal_date }}</time>
     <div class=e-node--b-photo--v-full__f-tags>
       {% for tag in node.meta.tags %}
         <a class=tag href='/tags/{{ tag|transliterate }}'>#{{ tag }}</a>
       {% endfor %}
     </div>
-    <div class=e-node--b-photo--v-full__f-description>
-      {{ node.meta.caption.text }}
-    </div>
-    {% if node.meta.location %}
-    <div itemscope itemtype="http://schema.org/Place">
-      <span itemprop="name">{{ node.meta.location.name }}</span>
-      <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-        <meta itemprop="latitude" content="{{ node.meta.location.latitude }}" />
-        <meta itemprop="longitude" content="{{ node.meta.location.longitude }}" />
+    {% if node.meta.caption.text %}
+      <div class=e-node--b-photo--v-full__f-description itemprop="description">
+        {{ node.meta.caption.text }}
       </div>
-    </div>
+    {% endif %}
+    {% if node.meta.location %}
+      <div itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
+        <span itemprop="name">{{ node.meta.location.name }}</span>
+
+        <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+          <meta itemprop="latitude" content="{{ node.meta.location.latitude }}"/>
+          <meta itemprop="longitude" content="{{ node.meta.location.longitude }}"/>
+        </div>
+      </div>
     {% endif %}
   </section>
   <footer class=e-node--b-photo--v-full__r-footer>
