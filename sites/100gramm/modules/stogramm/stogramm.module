@@ -166,11 +166,16 @@ function stogramm_image_save_submit($form, &$form_state) {
   $node->field_meta = drupal_json_encode($image);
   $node->raw()->meta = $image;
   if ($image['caption']) {
-    $node->title = (strlen($image['caption']['text']) < 128) ? $image['caption']['text'] : (mb_substr($image['caption']['text'], 0, 125) . '...');
+    $title = (strlen($image['caption']['text']) < 128) ? $image['caption']['text'] : (mb_substr($image['caption']['text'], 0, 125) . '...');
   }
   else {
-    $node->title = $image['id'];
+    $title = $image['id'];
   }
+
+  $title= preg_replace_callback('/./u', function (array $match) {
+    return strlen($match[0]) >= 4 ? null : $match[0];
+  }, $title);
+  $node->title = $title;
   $src = $image['images']['standard_resolution']['url'];
   $directory = 'public://photo/' . preg_replace('/.+:\/\//', '', drupal_dirname($src));
   file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
