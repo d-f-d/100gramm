@@ -18,8 +18,15 @@ class Photo extends VariantBase implements RenderInterface {
       '#markup' => Twig::render(file_get_contents(__DIR__ . '/Photo.html.twig'), $this->context, 'e-node--b-photo--v-full'),
       '#attached' => [
         'js' => [
-          ['data' => 'var switchTo5x=true', 'type' => 'inline', 'scope' => 'footer'],
-          ['data' => 'http://w.sharethis.com/button/buttons.js', 'scope' => 'footer'],
+          [
+            'data' => 'var switchTo5x=true',
+            'type' => 'inline',
+            'scope' => 'footer'
+          ],
+          [
+            'data' => 'http://w.sharethis.com/button/buttons.js',
+            'scope' => 'footer'
+          ],
           [
             'data' => 'stLight.options({publisher: "6ef8bdb3-26ac-4fbf-a188-334548b26038", doNotHash: true, doNotCopy: false, hashAddressBar: false});',
             'type' => 'inline',
@@ -36,7 +43,17 @@ class Photo extends VariantBase implements RenderInterface {
               ]
             ],
             'og:image'
-          ]
+          ],
+          [
+            [
+              "#tag" => 'meta',
+              "#attributes" => [
+                'property' => 'og:description',
+                'content' => isset($this->context['node']->meta['caption']['text'])?$this->context['node']->meta['caption']['text']:'',
+              ]
+            ],
+            'og:description'
+          ],
         ]
       ]
     ];
