@@ -49,6 +49,6 @@ class Everywhere implements RenderInterface {
    */
   static function page_render($variables) {
     $self = get_called_class();
-    return (new $self(['page' => $variables['page']]))->render();
+    return render((new $self(['page' => $variables['page']]))->render());
   }
 }

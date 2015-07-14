@@ -4,6 +4,7 @@ namespace d\Antipanels\Everywhere;
 
 use d\Antipanels\RenderInterface;
 use d\Antipanels\VariantBase as AbstractVariantBase;
+use d\Twig\Twig;
 
 abstract class VariantBase extends AbstractVariantBase implements RenderInterface {
   function preRender() {
@@ -13,4 +14,5 @@ abstract class VariantBase extends AbstractVariantBase implements RenderInterfac
     $this->context['messages'] = theme('status_messages');
     $this->context['tabs'] = menu_local_tabs();
   }
+
 }

@@ -1,12 +1,11 @@
 <?php
 namespace d\Antipanels\Page\Front;
 
-use d\Antipanels\RenderInterface;
+use d\Antipanels\RenderBase;
 use Drupal\d_submodules\Callback;
-use d\Twig\Twig;
 
 
-class Front implements RenderInterface {
+class Front extends RenderBase {
   use Callback;
 
   protected $context = [];
@@ -48,10 +47,4 @@ class Front implements RenderInterface {
     $this->context['nodes'] = node_load_multiple($nids);
   }
 
-  function render() {
-    $this->preRender();
-    return [
-      '#markup' => Twig::render(file_get_contents(__DIR__ . '/Front.html.twig'), $this->context, __CLASS__),
-    ];
-  }
 }
