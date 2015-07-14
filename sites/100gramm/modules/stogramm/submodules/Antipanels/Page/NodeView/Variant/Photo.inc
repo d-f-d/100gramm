@@ -48,8 +48,28 @@ class Photo extends VariantBase implements RenderInterface {
             [
               "#tag" => 'meta',
               "#attributes" => [
+                'property' => 'og:image:url:width',
+                'content' => 640
+              ]
+            ],
+            'og:image:width'
+          ],
+          [
+            [
+              "#tag" => 'meta',
+              "#attributes" => [
+                'property' => 'og:image:height',
+                'content' => 640
+              ]
+            ],
+            'og:image:height'
+          ],
+          [
+            [
+              "#tag" => 'meta',
+              "#attributes" => [
                 'property' => 'og:description',
-                'content' => isset($this->context['node']->meta['caption']['text'])?$this->context['node']->meta['caption']['text']:'',
+                'content' => isset($this->context['node']->meta['caption']['text']) ? $this->context['node']->meta['caption']['text'] : '',
               ]
             ],
             'og:description'
