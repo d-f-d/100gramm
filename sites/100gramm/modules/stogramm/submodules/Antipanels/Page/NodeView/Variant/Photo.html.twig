@@ -1,5 +1,5 @@
 {#{% set block = 'e-node--b-photo--v-full' %}#}
-<div class=e-node--b-photo--v-full>
+<article class=e-node--b-photo--v-full>
   <section class=e-node--b-photo--v-full__r-first>
     <div class=e-node--b-photo--v-full__f-field-photo>
       <a href="{{ node.field_photo['und'][0]['uri']|file_url|raw }}" title="{{ node.title }}" class=colorbox
@@ -35,6 +35,15 @@
     <div class=e-node--b-photo--v-full__f-description>
       {{ node.meta.caption.text }}
     </div>
+    {% if node.meta.location %}
+    <div itemscope itemtype="http://schema.org/Place">
+      <span itemprop="name">{{ node.meta.location.name }}</span>
+      <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+        <meta itemprop="latitude" content="{{ node.meta.location.latitude }}" />
+        <meta itemprop="longitude" content="{{ node.meta.location.longitude }}" />
+      </div>
+    </div>
+    {% endif %}
   </section>
   <footer class=e-node--b-photo--v-full__r-footer>
     <div class=e-node--b-photo--v-full__f-share>
@@ -52,4 +61,4 @@
       {{ render('d\\Antipanels\\Fragment\\CackleComments', {node:node})|raw }}
     </div>
   </footer>
-</div>
+</article>
