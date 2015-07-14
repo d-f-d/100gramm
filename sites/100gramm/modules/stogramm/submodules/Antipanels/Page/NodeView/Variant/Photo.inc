@@ -19,16 +19,15 @@ class Photo extends VariantBase implements RenderInterface {
       '#attached' => [
         'js' => [
           [
-            'data' => 'var switchTo5x=true',
-            'type' => 'inline',
-            'scope' => 'footer'
-          ],
-          [
-            'data' => 'http://w.sharethis.com/button/buttons.js',
-            'scope' => 'footer'
-          ],
-          [
-            'data' => 'stLight.options({publisher: "6ef8bdb3-26ac-4fbf-a188-334548b26038", doNotHash: true, doNotCopy: false, hashAddressBar: false});',
+            'data' => <<<SCRIPT
+
+var switchTo5x=true
+jQuery.ajaxSetup({cache: true});
+jQuery.getScript('//w.sharethis.com/button/buttons.js', function(){
+  stLight.options({publisher: "6ef8bdb3-26ac-4fbf-a188-334548b26038", doNotHash: true, doNotCopy: false, hashAddressBar: false});
+})
+SCRIPT
+              ,
             'type' => 'inline',
             'scope' => 'footer'
           ],
