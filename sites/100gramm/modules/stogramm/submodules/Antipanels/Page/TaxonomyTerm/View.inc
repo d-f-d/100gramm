@@ -31,7 +31,7 @@ class View implements RenderInterface {
   }
 
   function preRender() {
-    if ($nids = taxonomy_select_nodes($this->context['term']->tid, TRUE, variable_get('default_nodes_main', 12))) {
+    if ($nids = taxonomy_select_nodes($this->context['term']->tid, TRUE, 12)) {
       $this->context['nodes'] = node_load_multiple($nids);
     }
   }
