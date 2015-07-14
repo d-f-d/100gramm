@@ -151,10 +151,14 @@ function stogramm_image_save($form, &$form_state, $image = NULL) {
     '#type' => 'submit',
     '#value' => 'Сохранить',
     '#ajax' => [
-      'callback' => __FUNCTION__,
+      'callback' => __FUNCTION__ . '_ajax',
       'wrapper' => __FUNCTION__ . $image['id'],
     ],
   ];
+  return $form;
+}
+
+function stogramm_image_save_ajax($form, $form_state) {
   return $form;
 }
 
@@ -172,8 +176,8 @@ function stogramm_image_save_submit($form, &$form_state) {
     $title = $image['id'];
   }
 
-  $title= preg_replace_callback('/./u', function (array $match) {
-    return strlen($match[0]) >= 4 ? null : $match[0];
+  $title = preg_replace_callback('/./u', function (array $match) {
+    return strlen($match[0]) >= 4 ? NULL : $match[0];
   }, $title);
   $node->title = $title;
   $src = $image['images']['standard_resolution']['url'];
