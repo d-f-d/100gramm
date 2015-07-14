@@ -5,6 +5,7 @@ namespace d\Antipanels\Page\NodeView\Variant;
 use d\Antipanels\VariantBase;
 use d\Antipanels\RenderInterface;
 use d\Twig\Twig;
+use Underscore\Underscore as __;
 
 class Photo extends VariantBase implements RenderInterface {
 
@@ -13,7 +14,11 @@ class Photo extends VariantBase implements RenderInterface {
   }
 
   function render() {
+
     drupal_set_title('');
+    $tags = __::flatten($this->context['node']->field_tags) ?: [];
+    $tags = entity_load('taxonomy_term', $tags);
+    $this->context['tags'] = $tags;
     return [
       '#markup' => Twig::render(file_get_contents(__DIR__ . '/Photo.html.twig'), $this->context, 'e-node--b-photo--v-full'),
       '#attached' => [
@@ -27,7 +32,7 @@ jQuery.getScript('//w.sharethis.com/button/buttons.js', function(){
   stLight.options({publisher: "6ef8bdb3-26ac-4fbf-a188-334548b26038", doNotHash: true, doNotCopy: false, hashAddressBar: false});
 })
 SCRIPT
-              ,
+            ,
             'type' => 'inline',
             'scope' => 'footer'
           ],

@@ -27,8 +27,8 @@
     <time class=e-node--b-photo--v-full__f-date itemprop="datePublished"
           datetime="{{ node.created|date('c') }}">{{ node.created|drupal_date }}</time>
     <div class=e-node--b-photo--v-full__f-tags>
-      {% for tag in node.meta.tags %}
-        <a class=tag href='/tags/{{ tag|transliterate }}'>#{{ tag }}</a>
+      {% for tag in tags %}
+        <a class=tag href='{{ url('taxonomy/term/'~tag.tid) }}'>#{{ tag.name }}</a>
       {% endfor %}
     </div>
     {% if node.meta.caption.text %}
