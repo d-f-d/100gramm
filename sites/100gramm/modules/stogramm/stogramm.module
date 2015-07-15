@@ -7,6 +7,7 @@ function stogramm_menu() {
   $items['admin/stogramm'] = [
     'page callback' => 'stogramm_image_list',
     'title' => 'Список картинок',
+    'page argunents'=> [2],
     'access arguments' => ['administer site configuration'],
     'type' => MENU_NORMAL_ITEM,
   ];
@@ -56,7 +57,7 @@ function stogramm_widget() {
   drupal_exit();
 }
 
-function stogramm_image_list() {
+function stogramm_image_list($tag = 'govoritdonetsk') {
   $output = [];
   if (isset($_GET['code'])) {
     $ch = curl_init();
@@ -87,19 +88,16 @@ function stogramm_image_list() {
         ]
       ]) . '</p>'
   ];
-  $access_token = variable_get('stogramm_access_token', NULL);
-  $ch = curl_init();
-  $tag = arg(2) ? arg(2) : 'govoritdonetsk';
-  curl_setopt($ch, CURLOPT_URL, "https://api.instagram.com/v1/tags/$tag/media/recent?access_token=$access_token"
-    . (isset($_GET['max_tag_id']) ? ('&max_tag_id=' . $_GET['max_tag_id']) : '')
-    . (isset($_GET['min_tag_id']) ? ('&min_tag_id=' . $_GET['min_tag_id']) : '')
-  );
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-  $resp = drupal_json_decode(curl_exec($ch));
-//  dsm($resp);
-//  dsm(REQUEST_TIME);
+
+  $request = drupal_http_request(url("https://api.instagram.com/v1/tags/$tag/media/recent", [
+    'query' => [
+        'access_token' => variable_get('stogramm_access_token', NULL),
+      ]
+      + (isset($_GET['max_tag_id']) ? (['max_tag_id' => $_GET['max_tag_id']]) : [])
+      + (isset($_GET['min_tag_id']) ? (['min_tag_id' => $_GET['min_tag_id']]) : [])
+  ]));
+  $resp = drupal_json_decode($request->data);
+
   if (isset($resp['pagination']['next_min_id'])) {
     $output['pager-prev'] = [
       '#markup' => '<p>' . l('prev', current_path(), [
@@ -164,41 +162,48 @@ function stogramm_image_save_ajax($form, $form_state) {
 
 function stogramm_image_save_submit($form, &$form_state) {
   $image = drupal_json_decode($form_state['input']['image']);
-  $node = stogramm_get_node($image);
+  stogramm_save_image_to_node($image);
+}
+
+/**
+ * @param $data
+ * @throws \EntityMetadataWrapperException
+ */
+function stogramm_save_image_to_node($data) {
+  $node = stogramm_get_node($data);
   $node = entity_metadata_wrapper('node', $node);
-  $node->field_id = $image['id'];
-  $node->field_meta = drupal_json_encode($image);
-  $node->raw()->meta = $image;
-  if ($image['caption']) {
-    $title = (strlen($image['caption']['text']) < 128) ? $image['caption']['text'] : (mb_substr($image['caption']['text'], 0, 125) . '...');
+  $node->field_id = $data['id'];
+  $node->field_meta = drupal_json_encode($data);
+  $node->raw()->meta = $data;
+  if ($data['caption']) {
+    $title = (strlen($data['caption']['text']) < 128) ? $data['caption']['text'] : (mb_substr($data['caption']['text'], 0, 125) . '...');
   }
   else {
-    $title = $image['id'];
+    $title = $data['id'];
   }
-
   $title = preg_replace_callback('/./u', function (array $match) {
     return strlen($match[0]) >= 4 ? NULL : $match[0];
   }, $title);
   $node->title = $title;
-  $src = $image['images']['standard_resolution']['url'];
+  $src = $data['images']['standard_resolution']['url'];
   $directory = 'public://photo/' . preg_replace('/.+:\/\//', '', drupal_dirname($src));
   file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
   $uri = $directory . '/' . drupal_basename($src);
   $file = entity_load('file', ['uri' => $uri]);
-  $file = $file ? array_shift($file) : file_save_data(file_get_contents($src), $uri);
+  $file = $file ? reset($file) : file_save_data(file_get_contents($src), $uri);
   $node->field_photo = (array) $file;
   $node->save();
 }
 
 /**
- * @param $image
+ * @param $data
  * @return bool|mixed
  */
-function stogramm_get_node($image) {
+function stogramm_get_node($data) {
   $query = new EntityFieldQuery;
   $result = $query
     ->entityCondition('entity_type', 'node')
-    ->fieldCondition('field_id', 'value', $image['id'], '=')
+    ->fieldCondition('field_id', 'value', $data['id'], '=')
     ->execute();
   $node = isset($result['node']) ? node_load(array_keys($result['node'])[0]) : entity_create('node', ['type' => 'photo']);
   node_object_prepare($node);
