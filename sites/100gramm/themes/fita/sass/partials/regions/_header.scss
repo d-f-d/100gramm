@@ -87,7 +87,7 @@
         width: rem(44);
         background-size: 100%;
       }
-      @each $sn in facebook, vk, odnoklassniki, twitter {
+      @each $sn in facebook, vk, odnoklassniki, twitter, pinterest {
         &[href*='#{$sn}'] {
           @extend %iconb;
           background-image: image-url('#{$sn}.png');
