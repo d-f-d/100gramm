@@ -5,17 +5,17 @@ define('STOGRAMM_SECRET', 'f614fba9e84f4ceca6956ea353b1d42d');
 function stogramm_menu() {
   $items = [];
   $items['admin/stogramm'] = [
-    'page callback' => 'stogramm_image_list',
-    'title' => 'Список картинок',
-    'page argunents' => [2],
+    'page callback'    => 'stogramm_image_list',
+    'title'            => 'Список картинок',
+//    'page arguments' => [2],
     'access arguments' => ['administer site configuration'],
-    'type' => MENU_NORMAL_ITEM,
+    'type'             => MENU_NORMAL_ITEM,
   ];
   $items['widget.js'] = [
-    'page callback' => 'stogramm_widget',
-    'title' => 'Список картинок',
+    'page callback'    => 'stogramm_widget',
+    'title'            => 'Список картинок',
     'access arguments' => ['access content'],
-    'type' => MENU_NORMAL_ITEM,
+    'type'             => MENU_NORMAL_ITEM,
   ];
 
   return $items;
@@ -36,9 +36,9 @@ function stogramm_widget() {
     $output[] = '<a href="' . url('node/' . $node->nid->value(), ['absolute' => TRUE]) . '" target=_blank>' . theme_image_style(
         [
           'style_name' => 'widget',
-          'path' => $photo['uri'],
-          'width' => $photo['width'],
-          'height' => $photo['height']
+          'path'       => $photo['uri'],
+          'width'      => $photo['width'],
+          'height'     => $photo['height']
         ]
       ) . '</a>';
 //    dsm($node->title);
@@ -70,11 +70,11 @@ function stogramm_image_list($tag = 'govoritdonetsk') {
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_POSTFIELDS,
       [
-        'client_id' => STOGRAMM_ID,
+        'client_id'     => STOGRAMM_ID,
         'client_secret' => STOGRAMM_SECRET,
-        'grant_type' => 'authorization_code',
-        'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
-        'code' => $_GET['code'],
+        'grant_type'    => 'authorization_code',
+        'redirect_uri'  => url(current_path(), ['absolute' => TRUE]),
+        'code'          => $_GET['code'],
       ]
     );
     $resp = drupal_json_decode(curl_exec($ch));
@@ -84,8 +84,8 @@ function stogramm_image_list($tag = 'govoritdonetsk') {
   $output['login'] = [
     '#markup' => '<p>' . l('login', 'https://api.instagram.com/oauth/authorize/', [
         'query' => [
-          'client_id' => STOGRAMM_ID,
-          'redirect_uri' => url(current_path(), ['absolute' => TRUE]),
+          'client_id'     => STOGRAMM_ID,
+          'redirect_uri'  => url(current_path(), ['absolute' => TRUE]),
           'response_type' => 'code',
         ]
       ]) . '</p>'
@@ -118,9 +118,9 @@ function stogramm_image_list($tag = 'govoritdonetsk') {
     foreach ($resp['data'] as $image) {
       $row = [];
       $row['img'] = [
-        '#theme' => 'image',
-        '#path' => $image['images']['thumbnail']['url'],
-        '#width' => $image['images']['thumbnail']['width'],
+        '#theme'  => 'image',
+        '#path'   => $image['images']['thumbnail']['url'],
+        '#width'  => $image['images']['thumbnail']['width'],
         '#height' => $image['images']['thumbnail']['height'],
       ];
       $row['form'] = drupal_get_form('stogramm_image_save', $image);
@@ -138,7 +138,7 @@ function stogramm_image_save($form, &$form_state, $image = NULL) {
   $form['#suffix'] = '</div>';
 
   $form['image'] = [
-    '#type' => 'hidden',
+    '#type'  => 'hidden',
     '#value' => drupal_json_encode($image),
   ];
   $node = stogramm_get_node($image);
@@ -148,11 +148,11 @@ function stogramm_image_save($form, &$form_state, $image = NULL) {
     ];
   }
   $form['save'] = [
-    '#type' => 'submit',
+    '#type'  => 'submit',
     '#value' => 'Сохранить',
-    '#ajax' => [
+    '#ajax'  => [
       'callback' => __FUNCTION__ . '_ajax',
-      'wrapper' => __FUNCTION__ . $image['id'],
+      'wrapper'  => __FUNCTION__ . $image['id'],
     ],
   ];
   return $form;
@@ -174,6 +174,7 @@ function stogramm_image_save_submit($form, &$form_state) {
  */
 function stogramm_save_image_to_node($data) {
   $node = stogramm_get_node($data);
+  $node->uid = 1;
   $node = entity_metadata_wrapper('node', $node);
   $node->field_id = $data['id'];
   $node->field_meta = drupal_json_encode($data);
@@ -222,9 +223,10 @@ function stogramm_node_load($nodes) {
 }
 
 function stogramm_preprocess_html() {
-  drupal_add_html_head(["#tag" => 'meta',
+  drupal_add_html_head([
+    "#tag"        => 'meta',
     "#attributes" => [
-      'name' => "p:domain_verify",
+      'name'    => "p:domain_verify",
       'content' => 'e982f5c7914f390933057bdaa4040b5b'
     ]
   ], 'p:domain_verify');
