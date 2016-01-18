@@ -3,7 +3,8 @@
 namespace d;
 
 function getTags() {
-  yield from['fromdonetsk', 'govoritdonetsk'];
+  yield 'fromdonetsk';
+  yield 'govoritdonetsk';
 }
 
 function getData() {
@@ -15,7 +16,8 @@ function getData() {
     ]));
     $resp = drupal_json_decode($request->data);
     if (!empty($resp['data']) && is_array($resp['data'])) {
-      yield from $resp['data'];
+      foreach($resp['data'] as $data)
+      yield $data;
     }
   }
 }
