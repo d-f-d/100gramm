@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9e5b428f70e391b7a4d7ea4a3e81b915",
+    "hash": "1ef334ec3d063b18aa78e2387556cb2a",
+    "content-hash": "964ec931e6d21cc7b77379a1d33e7174",
     "packages": [
         {
             "name": "bdelespierre/underscore",
@@ -12,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bdelespierre/underscore.php.git",
-                "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318"
+                "reference": "639041f28224b52fd0cb3f0cc3000fb63f7cce48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bdelespierre/underscore.php/zipball/f9b328bc4d02f2edb0c43fe275764469a3fc7318",
-                "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318",
+                "url": "https://api.github.com/repos/bdelespierre/underscore.php/zipball/639041f28224b52fd0cb3f0cc3000fb63f7cce48",
+                "reference": "639041f28224b52fd0cb3f0cc3000fb63f7cce48",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +51,7 @@
                 "underscore",
                 "utility"
             ],
-            "time": "2015-01-12 17:02:16"
+            "time": "2016-01-12 19:44:50"
         },
         {
             "name": "symfony/yaml",
@@ -103,25 +104,29 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.18.2",
+            "version": "v1.23.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602"
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e8e6575abf6102af53ec283f7f14b89e304fa602",
-                "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ae53fc2c312fdee63773b75cb570304f85388b08",
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.18-dev"
+                    "dev-master": "1.23-dev"
                 }
             },
             "autoload": {
@@ -156,7 +161,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-06-06 23:31:24"
+            "time": "2016-01-11 14:02:19"
         }
     ],
     "packages-dev": [],

@@ -1,53 +1,5 @@
 [
     {
-        "name": "bdelespierre/underscore",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/bdelespierre/underscore.php.git",
-            "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/bdelespierre/underscore.php/zipball/f9b328bc4d02f2edb0c43fe275764469a3fc7318",
-            "reference": "f9b328bc4d02f2edb0c43fe275764469a3fc7318",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "atoum/atoum": "dev-master"
-        },
-        "time": "2015-01-12 17:02:16",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Underscore": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL"
-        ],
-        "authors": [
-            {
-                "name": "Benjamin Delespierre",
-                "email": "benjamin.delespierre@gmail.com"
-            }
-        ],
-        "description": "Underscore.js port in PHP",
-        "homepage": "https://github.com/bdelespierre/underscore.php",
-        "keywords": [
-            "JS",
-            "php",
-            "underscore",
-            "utility"
-        ]
-    },
-    {
         "name": "symfony/yaml",
         "version": "v2.7.0",
         "version_normalized": "2.7.0.0",
@@ -100,27 +52,31 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.18.2",
-        "version_normalized": "1.18.2.0",
+        "version": "v1.23.3",
+        "version_normalized": "1.23.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602"
+            "reference": "ae53fc2c312fdee63773b75cb570304f85388b08"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/e8e6575abf6102af53ec283f7f14b89e304fa602",
-            "reference": "e8e6575abf6102af53ec283f7f14b89e304fa602",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/ae53fc2c312fdee63773b75cb570304f85388b08",
+            "reference": "ae53fc2c312fdee63773b75cb570304f85388b08",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.7"
         },
-        "time": "2015-06-06 23:31:24",
+        "require-dev": {
+            "symfony/debug": "~2.7",
+            "symfony/phpunit-bridge": "~2.7"
+        },
+        "time": "2016-01-11 14:02:19",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.18-dev"
+                "dev-master": "1.23-dev"
             }
         },
         "installation-source": "dist",
@@ -155,6 +111,54 @@
         "homepage": "http://twig.sensiolabs.org",
         "keywords": [
             "templating"
+        ]
+    },
+    {
+        "name": "bdelespierre/underscore",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/bdelespierre/underscore.php.git",
+            "reference": "639041f28224b52fd0cb3f0cc3000fb63f7cce48"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/bdelespierre/underscore.php/zipball/639041f28224b52fd0cb3f0cc3000fb63f7cce48",
+            "reference": "639041f28224b52fd0cb3f0cc3000fb63f7cce48",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "atoum/atoum": "dev-master"
+        },
+        "time": "2016-01-12 19:44:50",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Underscore": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Benjamin Delespierre",
+                "email": "benjamin.delespierre@gmail.com"
+            }
+        ],
+        "description": "Underscore.js port in PHP",
+        "homepage": "https://github.com/bdelespierre/underscore.php",
+        "keywords": [
+            "JS",
+            "php",
+            "underscore",
+            "utility"
         ]
     }
 ]

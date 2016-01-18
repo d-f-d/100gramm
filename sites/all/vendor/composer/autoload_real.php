@@ -43,8 +43,3 @@ class ComposerAutoloaderInitComposerManager
         return $loader;
     }
 }
-
-function composerRequireComposerManager($file)
-{
-    require $file;
-}
