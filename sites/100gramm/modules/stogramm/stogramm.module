@@ -114,17 +114,10 @@ function stogramm_image_list($tag = 'govoritdonetsk') {
         ]) . '</p>'
     ];
   }
+  $output['image'][] = drupal_get_form('stogramm_image_save');
   if (!empty($resp['data'])) {
     foreach ($resp['data'] as $image) {
-      $row = [];
-      $row['img'] = [
-        '#theme'  => 'image',
-        '#path'   => $image['images']['thumbnail']['url'],
-        '#width'  => $image['images']['thumbnail']['width'],
-        '#height' => $image['images']['thumbnail']['height'],
-      ];
-      $row['form'] = drupal_get_form('stogramm_image_save', $image);
-      $output['image'][] = $row;
+      $output['image'][] = drupal_get_form('stogramm_image_save', $image);
     }
   }
   return $output;
@@ -134,17 +127,32 @@ function stogramm_image_save($form, &$form_state, $image = NULL) {
   if (isset($form_state['input']['image'])) {
     $image = drupal_json_decode($form_state['input']['image']);
   }
-  $form['#prefix'] = '<div id=' . __FUNCTION__ . $image['id'] . '>';
-  $form['#suffix'] = '</div>';
+  $id = isset($form_state['storage']['id']) ? isset($form_state['storage']['id']) : NULL;
+  $id = $id ?: __FUNCTION__ . '__' . ($image ? $image['id'] : mt_rand(0, 99999));
 
-  $form['image'] = [
-    '#type'  => 'hidden',
-    '#value' => drupal_json_encode($image),
-  ];
-  $node = stogramm_get_node($image);
-  if (isset($node->nid)) {
-    $form['link'] = [
-      '#markup' => '<p>' . l($node->title, 'node/' . $node->nid) . '</p>',
+  $form['#id'] = $id;
+  if ($image) {
+    $form['img'] = [
+      '#theme'  => 'image',
+      '#path'   => $image['images']['thumbnail']['url'],
+      '#width'  => $image['images']['thumbnail']['width'],
+      '#height' => $image['images']['thumbnail']['height'],
+    ];
+    $form['image'] = [
+      '#type'  => 'hidden',
+      '#value' => drupal_json_encode($image),
+    ];
+    $node = stogramm_get_node($image);
+    if (isset($node->nid)) {
+      $form['link'] = [
+        '#markup' => '<p>' . l($node->title, 'node/' . $node->nid) . '</p>',
+      ];
+    }
+  }
+  else {
+    $form['image'] = [
+      '#title' => 'URL элемента',
+      '#type'  => 'textfield',
     ];
   }
   $form['save'] = [
@@ -152,7 +160,7 @@ function stogramm_image_save($form, &$form_state, $image = NULL) {
     '#value' => 'Сохранить',
     '#ajax'  => [
       'callback' => __FUNCTION__ . '_ajax',
-      'wrapper'  => __FUNCTION__ . $image['id'],
+      'wrapper'  => $id,
     ],
   ];
   return $form;
@@ -164,8 +172,22 @@ function stogramm_image_save_ajax($form, $form_state) {
 
 function stogramm_image_save_submit($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
-  $image = drupal_json_decode($form_state['input']['image']);
-  stogramm_save_image_to_node($image);
+  if (preg_match('#https?://(www\.)?instagram\.com/p/([^/]+).*#',$form_state['input']['image'], $matches)) {
+    $shortcode = $matches[2];
+    $request = drupal_http_request(url("https://api.instagram.com/v1/media/shortcode/$shortcode", [
+      'query' => [
+          'access_token' => variable_get('stogramm_access_token', NULL),
+        ]
+    ]));
+    $resp = drupal_json_decode($request->data);
+    $form_state['input']['image'] = drupal_json_encode($resp['data']);
+  }
+  else {
+    $image = drupal_json_decode($form_state['input']['image']);
+    if ($image) {
+      stogramm_save_image_to_node($image);
+    }
+  }
 }
 
 /**
