@@ -15,7 +15,8 @@ class Photo extends VariantBase implements RenderInterface {
 
   function preRender() {
     drupal_set_title('');
-    $tags = __::flatten($this->context['node']->field_tags) ?: [];
+    $node = $this->context['node'];
+    $tags = __::flatten($node->field_tags) ?: [];
     $tags = entity_load('taxonomy_term', $tags);
     $this->context['tags'] = $tags;
     $this->attached = [
@@ -40,7 +41,7 @@ SCRIPT
             "#tag" => 'meta',
             "#attributes" => [
               'property' => 'og:image',
-              'content' => file_create_url($this->context['node']->field_photo['und'][0]['uri'])
+              'content' => file_create_url($node->field_photo['und'][0]['uri'])
             ]
           ],
           'og:image'
@@ -70,7 +71,7 @@ SCRIPT
             "#tag" => 'meta',
             "#attributes" => [
               'property' => 'og:description',
-              'content' => isset($this->context['node']->meta['caption']['text']) ? $this->context['node']->meta['caption']['text'] : '',
+              'content' => isset($node->body['und'][0]['value'])?$node->body['und'][0]['value']:(isset($node->meta['caption']['text']) ? $node->meta['caption']['text'] : ''),
             ]
           ],
           'og:description'

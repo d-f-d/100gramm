@@ -31,9 +31,13 @@
         <a class=tag href='{{ url('taxonomy/term/'~tag.tid) }}'>#{{ tag.name }}</a>
       {% endfor %}
     </div>
-    {% if node.meta.caption.text %}
+    {% if  node.body['und'][0]['value'] %}
       <div class=e-node--b-photo--v-full__f-description itemprop="description">
-        {{ node.meta.caption.text }}
+        {{ node.body['und'][0]['value']|nl2br }}
+      </div>
+    {% elseif node.meta.caption.text %}
+      <div class=e-node--b-photo--v-full__f-description itemprop="description">
+        {{ node.meta.caption.text|nl2br }}
       </div>
     {% endif %}
     {% if node.meta.location %}
