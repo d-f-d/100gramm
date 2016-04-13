@@ -214,7 +214,7 @@ function stogramm_save_image_to_node($data) {
   $src = $data['images']['standard_resolution']['url'];
   $directory = 'public://photo/' . preg_replace('/.+:\/\//', '', drupal_dirname($src));
   file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-  $uri = $directory . '/' . drupal_basename($src);
+  $uri = $directory . '/' . drupal_basename(parse_url($src, PHP_URL_PATH));
   $file = entity_load('file', ['uri' => $uri]);
   $file = $file ? reset($file) : file_save_data(file_get_contents($src), $uri);
   $node->field_photo = (array) $file;
