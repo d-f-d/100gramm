@@ -5,3 +5,5 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 /php.ini
+/sites/all/modules/devel_image_provider/
+/sites/all/modules/devel/
