@@ -1,4 +1,0 @@
-name = chosen
-version = 0.9.8
-files[js][] = chosen/chosen.jquery.js
-files[css][] = chosen/chosen.css

@@ -1,5 +1,0 @@
-name = cssua
-version = 7.х-0.1
-files[js][] = noie.js
-files[css][] = noie.css
-dependencies[] = modernizr

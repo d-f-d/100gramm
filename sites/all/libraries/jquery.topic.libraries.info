@@ -1,3 +1,0 @@
-name = jquery.topic
-version = 1
-files[js][] = jquery.topic.js

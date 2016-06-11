@@ -1,4 +1,0 @@
-name = prefixfree
-version = 7.х-0.1
-files[js][] = prefixfree.min.js
-files[js][] = prefixfree.dynamic-dom.min.js

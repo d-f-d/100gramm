@@ -1,6 +1,0 @@
-name = cssua
-vendor url = http://cssuseragent.org/
-download url = http://bitbucket.org/mckamey/cssuseragent/raw/tip/cssua.js
-version = 1
-files[js][] = cssua.js
-variants[min][files][js][] = cssua-min.js
