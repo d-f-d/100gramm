@@ -85,6 +85,7 @@ function stogramm_image_list($tag = 'govoritdonetsk') {
     '#markup' => '<p>' . l('login', 'https://api.instagram.com/oauth/authorize/', [
         'query' => [
           'client_id'     => STOGRAMM_ID,
+          'scope' => 'public_content',
           'redirect_uri'  => url(current_path(), ['absolute' => TRUE]),
           'response_type' => 'code',
         ]
