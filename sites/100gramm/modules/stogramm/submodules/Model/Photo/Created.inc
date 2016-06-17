@@ -8,6 +8,8 @@ class Created {
    * @implement node_presave
    */
   static function fix($node) {
-    $node->created = $node->meta['created_time'];
+    if (isset ($node->meta['created_time'])) {
+      $node->created = $node->meta['created_time'];
+    }
   }
 }
