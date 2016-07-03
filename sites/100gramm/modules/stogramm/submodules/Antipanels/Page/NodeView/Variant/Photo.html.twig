@@ -15,6 +15,7 @@
       <span class=st_twitter_hcount displayText='Tweet'></span>
       <span class=st_plusone_hcount displayText='Google +1'></span>
     </div>
+    {% if node.meta.user %}
     <div class=e-node--b-photo--v-full__f-author itemscope itemprop="author" itemtype="https://schema.org/Person">
       <figure>
         <img src="{{ node.meta.user.profile_picture|raw }}" itemprop="image">
@@ -24,6 +25,7 @@
         </figcaption>
       </figure>
     </div>
+    {% endif %}
     <time class=e-node--b-photo--v-full__f-date itemprop="datePublished"
           datetime="{{ node.created|date('c') }}">{{ node.created|drupal_date }}</time>
     <div class=e-node--b-photo--v-full__f-tags>
@@ -37,13 +39,16 @@
       </div>
     {% elseif node.meta.caption.text %}
       <div class=e-node--b-photo--v-full__f-description itemprop="description">
-        {{ node.meta.caption.text|nl2br }}
+        {{ node.meta.caption.text|default(node.meta.caption.text)|nl2br }}
+      </div>
+    {% elseif node.meta.text %}
+      <div class=e-node--b-photo--v-full__f-description itemprop="description">
+        {{ node.meta.caption.text|default(node.meta.text)|nl2br }}
       </div>
     {% endif %}
     {% if node.meta.location %}
       <div itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
         <span itemprop="name">{{ node.meta.location.name }}</span>
-
         <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
           <meta itemprop="latitude" content="{{ node.meta.location.latitude }}"/>
           <meta itemprop="longitude" content="{{ node.meta.location.longitude }}"/>
