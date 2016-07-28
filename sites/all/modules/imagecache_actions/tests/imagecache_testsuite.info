@@ -1,13 +1,16 @@
-core = 7.x
-dependencies[] = imagecache_actions
-description = Displays a collection of demo presets.
-features[image][] = 'corners_combo'
 name = Imagecache_actions Test Suite
-package = Image
-project = "imagecache_testsuite"
-; Information added by drupal.org packaging script on 2012-01-12
-version = "7.x-1.x-dev"
+description = Displays a collection of demo image styles.
+package = Media
+core = 7.x
+
+dependencies[] = imagecache_actions
+dependencies[] = system_stream_wrapper
+
+features[image][] = 'corners_combo'
+
+; Information added by Drupal.org packaging script on 2016-02-19
+version = "7.x-1.7"
 core = "7.x"
 project = "imagecache_actions"
-datestamp = "1326370359"
+datestamp = "1455872655"
 
