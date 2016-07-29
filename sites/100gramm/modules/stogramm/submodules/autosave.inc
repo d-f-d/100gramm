@@ -33,6 +33,26 @@ function getData() {
         yield $data;
       }
     }
+
+    $request = drupal_http_request(url("https://api.vk.com/method/newsfeed.search", [
+      'query' => [
+        'q'     => "#$tag",
+        'count' => 10,
+        'v'     => '5.52'
+      ]
+    ]));
+    $resp = drupal_json_decode($request->data)['response'];
+    if (!empty($resp['items'])) {
+      foreach ($resp['items'] as $post) {
+        if(!empty($post['attachments'])){
+          foreach ($post['attachments'] as $attach){
+            if($attach['type'] ==='photo'){
+              yield (['text' => $post['text']] + $attach['photo']);
+            }
+          }
+        }
+      }
+    }
   }
 }
 

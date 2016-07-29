@@ -20,6 +20,13 @@ function stogramm_menu() {
     'access arguments' => ['administer site configuration'],
     'type'             => MENU_NORMAL_ITEM,
   ];
+  $items['admin/vkpost'] = [
+    'page callback'    => 'vk_post_list',
+    'title'            => 'Список новостей',
+//    'page arguments' => [2],
+    'access arguments' => ['administer site configuration'],
+    'type'             => MENU_NORMAL_ITEM,
+  ];
   $items['widget.js'] = [
     'page callback'    => 'stogramm_widget',
     'title'            => 'Список картинок',
@@ -131,6 +138,51 @@ function vk_image_list($tag = 'govoritdonetsk') {
   return $output;
 
 }
+
+function vk_post_list($tag = 'govoritdonetsk') {
+  $page = isset($_GET['page']) ? $_GET['page'] : 0;
+  $page_size = 10;
+  $request = drupal_http_request(url("https://api.vk.com/method/newsfeed.search", [
+    'query' => [
+      'q'      => "#$tag",
+     // 'offset' => $page * $page_size,
+      'count'  => $page_size,
+      'v'      => '5.53'
+    ]
+  ]));
+  $resp = drupal_json_decode($request->data)['response'];
+  $output = [];
+  if ($resp['count'] > ($page + 1) * $page_size) {
+    $output['pager-prev'] = [
+      '#markup' => '<p>' . l('prev', current_path(), [
+          'query' => ['page' => $page + 1]
+        ]) . '</p>'
+    ];
+  }
+  if ($page) {
+    $output['pager-next'] = [
+      '#markup' => '<p>' . l('next', current_path(), [
+          'query' => ['page' => $page - 1]
+        ]) . '</p>'
+    ];
+  }
+
+  if (!empty($resp['items'])) {
+    foreach ($resp['items'] as $post) {
+      if(!empty($post['attachments'])){
+        foreach ($post['attachments'] as $attach){
+          if($attach['type'] ==='photo'){
+            $output['image'][] = drupal_get_form('vkgramm_image_save', ['text' => $post['text']] + $attach['photo']);
+          }
+        }
+      }
+
+    }
+  }
+  return $output;
+
+}
+
 
 function stogramm_image_list($tag = 'govoritdonetsk') {
   $output = [];
@@ -351,7 +403,7 @@ function vkgramm_save_image_to_node($data) {
   }
 
   preg_match_all('/#([^\W]+)/u', $data['text'], $tags);
-  $tags = $tags[1]?:[];
+  $tags = $tags[1] ?: [];
   $data['tags'] = $tags;
   $directory = 'public://photo/' . preg_replace('/.+:\/\//', '', drupal_dirname($src));
   file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
