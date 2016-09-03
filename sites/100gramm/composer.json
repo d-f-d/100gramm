@@ -3,7 +3,7 @@
   "require": {
     "php": ">=5.4.0",
     "bdelespierre/underscore": "dev-master",
-    "symfony/yaml": "2.7.0",
+    "symfony/yaml": "^2.7",
     "twig/twig": "~1.0"
   },
   "config": {
